@@ -1,0 +1,7 @@
+#listItem {
+	color: #952427;
+}
+
+#listItem:hover {
+	background-color: #DDD;
+}

@@ -1,0 +1,29 @@
+.card-proj {
+	margin: 20px;
+	padding: 10px;
+}
+
+.card-img {
+	width: 380px;
+	height: 230px;
+}
+
+.card-block {
+	margin-top: 20px;
+}
+
+.text-justify {
+	white-space: pre-line !important;
+}
+
+.bloco {
+	margin-bottom: 10px;
+}
+
+a:link {
+	text-decoration: none;
+}
+
+h3 {
+	margin-top: 10px;
+}

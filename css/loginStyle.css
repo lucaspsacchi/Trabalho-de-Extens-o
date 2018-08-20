@@ -1,0 +1,39 @@
+@font-face {
+	font-family: Glacial Indifference;
+	src: url(../glacial-indifference/GlacialIndifference-Regular.otf);
+}
+
+body {
+	margin: 0;
+	font-family: Glacial Indifference;
+}
+
+.form-group {
+		width: 100%;
+		padding: 10px;
+		margin: auto;
+		font-size: 16px;
+}
+
+.form-group button {
+		font-size: 18px;
+}
+
+.my-nav {
+	background-color: #DDD;
+}
+
+.my-nav h4 {
+	color: #952427;
+}
+
+.footertexto {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	background-color: #DDD;
+	color: black;
+	font-size: 12.5px;
+	margin-bottom: -5px;
+	padding: 20px;
+}
