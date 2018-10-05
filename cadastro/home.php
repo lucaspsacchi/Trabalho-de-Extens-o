@@ -24,7 +24,8 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 	//Realiza uma busca no banco de dados para listar os projetos de um professor em específico
 	$scriptSQL = "SELECT projeto.id_projeto, projeto.nome, projeto.enable
 								FROM projeto NATURAL JOIN proj_prof
-								WHERE id_professor = ".$id;
+								WHERE id_professor = ".$id."
+								ORDER BY projeto.id_projeto DESC";
 
 	$result = $conn->query($scriptSQL);
 ?>

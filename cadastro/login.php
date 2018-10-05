@@ -82,13 +82,13 @@ if (isset($_POST['inputUser'])) {
                 <div class="form-group row justify-content-center">
                     <label for="loginUser" class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-form-label">Usuário</label>
                     <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
-                        <input type="text" class="form-control" name="inputUser" pattern=".{4,10}" required autofocus>
+                        <input type="text" class="form-control" name="inputUser" pattern=".{4,20}" required autofocus>
                     </div>
                 </div>
                 <div class="form-group row justify-content-center">
                     <label for="loginPassword" class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-form-label">Senha</label>
                     <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
-                        <input type="password" class="form-control" name="inputPassword" placeholder="4 a 10 caracteres" pattern=".{4,10}" required>
+                        <input type="password" class="form-control" name="inputPassword" placeholder="4 a 20 caracteres" pattern=".{4,20}" required>
                     </div>
                 </div>
                 <div class="form-group row justify-content-end">

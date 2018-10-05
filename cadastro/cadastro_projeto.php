@@ -11,13 +11,15 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 
 	//Realiza uma busca no banco de dados para buscar todas as áreas
 	$scriptArea = "SELECT id_area, nome
-								FROM area";
+								FROM area
+								GROUP BY nome ASC";
 
 	$resultArea = $conn->query($scriptArea);
 
 	//Realiza uma busca no banco de dados para buscar todos os professores
-	$scriptProf = "SELECT id_professor, nome
-								FROM professor";
+	$scriptProf = "SELECT id_professor, nome, enable
+								FROM professor
+								ORDER BY nome ASC";
 
 	$resultProf = $conn->query($scriptProf);
 
@@ -55,7 +57,14 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 							$destino = '../Imagens/' . $novoNome;
 							$sourcePath = $_FILES['file']['tmp_name']; // Storing source path of the file in a variable
 
-							move_uploaded_file($sourcePath, $destino); // Moving Uploaded file
+							$flag_img = move_uploaded_file($sourcePath, $destino); // Moving Uploaded file
+							//if ($flag_img != TRUE) {
+								?>
+								<script>
+									alert("Ocorreu um erro inesperado com a imagem");
+								</script>
+								<?php
+							//}
 					}
 				}
 			}
@@ -63,16 +72,16 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 
 			//Inserção dos dados do projeto no banco de dados
 			if ($var_site == NULL && $var_alunos == NULL) {
-				$insertSQL = "INSERT INTO `interbccs`.`projeto` (`nome`, `foto`, `descricao`, `data_inicio`, `concluido`, `enable`) VALUES ('".$_POST['nome']."', '".$novoNome."', '".$_POST['descricao']."', '".$_POST['data']."', '".$_POST['andamento']."', '1');";
+				$insertSQL = "INSERT INTO `interbccs_db`.`projeto` (`nome`, `foto`, `descricao`, `data_inicio`, `concluido`, `enable`) VALUES ('".$_POST['nome']."', '".$novoNome."', '".$_POST['descricao']."', '".$_POST['data']."', '".$_POST['andamento']."', '1');";
 			}
 			else if ($var_site == NULL) {
-				$insertSQL = "INSERT INTO `interbccs`.`projeto` (`nome`, `foto`, `descricao`, `alunos`, `data_inicio`, `concluido`, `enable`) VALUES ('".$_POST['nome']."', '".$novoNome."', '".$_POST['descricao']."', '".$var_alunos."', '".$_POST['data']."', '".$_POST['andamento']."', '1');";
+				$insertSQL = "INSERT INTO `interbccs_db`.`projeto` (`nome`, `foto`, `descricao`, `alunos`, `data_inicio`, `concluido`, `enable`) VALUES ('".$_POST['nome']."', '".$novoNome."', '".$_POST['descricao']."', '".$var_alunos."', '".$_POST['data']."', '".$_POST['andamento']."', '1');";
 			}
 			else if ($var_alunos == NULL) {
-				$insertSQL = "INSERT INTO `interbccs`.`projeto` (`nome`, `foto`, `site_proj`, `descricao`, `data_inicio`, `concluido`, `enable`) VALUES ('".$_POST['nome']."', '".$novoNome."', '".$var_site."', '".$_POST['descricao']."', '".$_POST['data']."', '".$_POST['andamento']."', '1');";			
+				$insertSQL = "INSERT INTO `interbccs_db`.`projeto` (`nome`, `foto`, `site_proj`, `descricao`, `data_inicio`, `concluido`, `enable`) VALUES ('".$_POST['nome']."', '".$novoNome."', '".$var_site."', '".$_POST['descricao']."', '".$_POST['data']."', '".$_POST['andamento']."', '1');";			
 			}
 			else {
-				$insertSQL = "INSERT INTO `interbccs`.`projeto` (`nome`, `foto`, `site_proj`, `descricao`, `alunos`, `data_inicio`, 		`concluido`, `enable`) VALUES ('".$_POST['nome']."', '".$novoNome."', '".$var_site."', '".$_POST['descricao']."', '".$var_alunos."', '".$_POST['data']."', '".$_POST['andamento']."', '1');";			
+				$insertSQL = "INSERT INTO `interbccs_db`.`projeto` (`nome`, `foto`, `site_proj`, `descricao`, `alunos`, `data_inicio`, 		`concluido`, `enable`) VALUES ('".$_POST['nome']."', '".$novoNome."', '".$var_site."', '".$_POST['descricao']."', '".$var_alunos."', '".$_POST['data']."', '".$_POST['andamento']."', '1');";			
 			}
 			
 			if (mysqli_query($conn, $insertSQL) == TRUE) {
@@ -89,22 +98,22 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 			//Manipulação e inserção das áreas do projeto inserido
 			if (isset($_POST['checkarea'])) {
 				foreach ($_POST['checkarea'] as $key => $value) {
-					$insertArea = "INSERT INTO `interbccs`.`area_proj` (`id_area`, `id_projeto`) VALUE ('".$value."', '".$index."')";
+					$insertArea = "INSERT INTO `interbccs_db`.`area_proj` (`id_area`, `id_projeto`) VALUE ('".$value."', '".$index."')";
 					mysqli_query($conn, $insertArea);
 				}
 			}
 			//Manipulação e inserção dos professores do projeto inserido
 			if (isset($_POST['checkprof'])) {
 				foreach ($_POST['checkprof'] as $key => $val) {
-					$insertProf = "INSERT INTO `interbccs`.`proj_prof` (`id_professor`, `id_projeto`) VALUE ('".$val."', '".$index."')";
+					$insertProf = "INSERT INTO `interbccs_db`.`proj_prof` (`id_professor`, `id_projeto`) VALUE ('".$val."', '".$index."')";
 					mysqli_query($conn, $insertProf);
 				}
 			}
 			//Insere o professor que está cadastrando um projeto
-			$insertProf = "INSERT INTO `interbccs`.`proj_prof` (`id_professor`, `id_projeto`) VALUE ('".$_SESSION['idSave']."', '".$index."')";
+			$insertProf = "INSERT INTO `interbccs_db`.`proj_prof` (`id_professor`, `id_projeto`) VALUE ('".$_SESSION['idSave']."', '".$index."')";
 			mysqli_query($conn, $insertProf);
 
-			$_SESSION['mensagem'] = "Projeto cadastrado com sucesso!";
+			//$_SESSION['mensagem'] = "Projeto cadastrado com sucesso!";
 			header('Location: ./home.php');			
 		}
 
@@ -204,12 +213,14 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 											$rowprof = $res_prof->num_rows;
 
 											while ($obj_prof=$res_prof->fetch_object()) {
+												if ($obj_prof->enable) {
 									?>
 												<input type="checkbox" name="checkprof[]" value="<?php echo $obj_prof->id_professor;?>" <?php
 												if($_SESSION['idSave']==$obj_prof->id_professor) echo "checked disabled"; ?>>
 												<label><?php echo $obj_prof->nome;?></label>
 									<?php
-												echo '<br>';
+												echo '<br>';	
+												}
 											}
 									?>
 									</div>

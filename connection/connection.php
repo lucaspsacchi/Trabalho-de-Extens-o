@@ -1,8 +1,8 @@
 <?php
-    $servername = "localhost";
-    $username = "root";
-    $password = "mysql";
-    $database = "interbccs";
+    $servername = "web-db.ufscar.br";
+    $username = "adminterbccs";
+    $password = "kEve*WEqARa7=cH";
+    $database = "interbccs_db";
 
     // Create connection
     $conn = new mysqli($servername, $username, $password, $database);

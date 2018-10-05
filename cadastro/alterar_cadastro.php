@@ -21,7 +21,7 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 
 
 	if (isset($_POST['remover_dados'])) {
-		$upd = "UPDATE `interbccs`.`projeto`
+		$upd = "UPDATE `interbccs_db`.`projeto`
 		SET	`enable` = '0'
 		WHERE id_projeto = ".$id.";";
 
@@ -52,8 +52,8 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 				} else {
 
 					$novoNome = uniqid(time()) . '.' . $file_extension;
-					$destino = '../Imagens/' . $novoNome;
-					$sourcePath = $_FILES['file']['tmp_name']; // Storing source path of the file in a variable
+					$destino = "../Imagens/".$novoNome;
+					$sourcePath = $_FILES["file"]["tmp_name"]; // Storing source path of the file in a variable
 
 					move_uploaded_file($sourcePath, $destino); // Moving Uploaded file
 				}
@@ -87,24 +87,24 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 		
 		if ($var_site) {
 			if ($var_alunos) {
-				$insertSQL = "UPDATE `interbccs`.`projeto`
+				$insertSQL = "UPDATE `interbccs_db`.`projeto`
 				SET `nome` = '".$_POST['nome']."', `descricao` = '".$_POST['descricao']."', `data_inicio` = '".$_POST['data']."', `concluido` = '".$_POST['andamento']."', `site_proj` = '".$_POST['site']."', `alunos` = '".$_POST['alunos']."', `foto` = '".$novoNome."'
 				WHERE id_projeto = ".$id.";";				
 			}
 			else {
-				$insertSQL = "UPDATE `interbccs`.`projeto`
+				$insertSQL = "UPDATE `interbccs_db`.`projeto`
 				SET `nome` = '".$_POST['nome']."', `descricao` = '".$_POST['descricao']."', `data_inicio` = '".$_POST['data']."', `concluido` = '".$_POST['andamento']."', `site_proj` = '".$_POST['site']."', `foto` = '".$novoNome."'
 				WHERE id_projeto = ".$id.";";					
 			}
 		}
 		else {
 			if ($var_alunos) {
-				$insertSQL = "UPDATE `interbccs`.`projeto`
+				$insertSQL = "UPDATE `interbccs_db`.`projeto`
 				SET `nome` = '".$_POST['nome']."', `descricao` = '".$_POST['descricao']."', `data_inicio` = '".$_POST['data']."', `concluido` = '".$_POST['andamento']."', `alunos` = '".$_POST['alunos']."', `foto` = '".$novoNome."'
 				WHERE id_projeto = ".$id.";";						
 			}
 			else {
-				$insertSQL = "UPDATE `interbccs`.`projeto`
+				$insertSQL = "UPDATE `interbccs_db`.`projeto`
 				SET `nome` = '".$_POST['nome']."', `descricao` = '".$_POST['descricao']."', `data_inicio` = '".$_POST['data']."', `concluido` = '".$_POST['andamento']."', `foto` = '".$novoNome."'
 				WHERE id_projeto = ".$id.";";					
 			}		
@@ -139,7 +139,7 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 			foreach ($_POST['checkarea'] as $key => $value) {
 					for (;$objArea->id_area != NULL && $objArea->id_area < $value;) {
 						//Remove a tupla
-						$del_area = "DELETE FROM `interbccs`.`area_proj` WHERE id_area =".$objArea->id_area." AND id_projeto =".$id;
+						$del_area = "DELETE FROM `interbccs_db`.`area_proj` WHERE id_area =".$objArea->id_area." AND id_projeto =".$id;
 						$conn->query($del_area);
 						//Incrementa o obj
 						if ($objArea->id_area != NULL) {
@@ -148,21 +148,21 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 					}
 					//Verifica se o id encontrado precisa ser inserido
 					if ($objArea->id_area != NULL && $value < $objArea->id_area) {
-						$ins_area = "INSERT INTO `interbccs`.`area_proj` (`id_area`, `id_projeto`) VALUE ('".$value."', '".$id."')";
+						$ins_area = "INSERT INTO `interbccs_db`.`area_proj` (`id_area`, `id_projeto`) VALUE ('".$value."', '".$id."')";
 						$conn->query($ins_area);
 					}
 					else if ($objArea->id_area != NULL && $objArea->id_area == $value) {
 						$objArea = $sel->fetch_object();
 					}
 					else if ($objArea->id_area == NULL) {
-						$ins_area = "INSERT INTO `interbccs`.`area_proj` (`id_area`, `id_projeto`) VALUE ('".$value."', '".$id."')";
+						$ins_area = "INSERT INTO `interbccs_db`.`area_proj` (`id_area`, `id_projeto`) VALUE ('".$value."', '".$id."')";
 						$conn->query($ins_area);				
 					}
 				}
 
 			//Se ainda restar tuplas checked para ser removidas
 			while ($objArea->id_area != NULL) {
-				$del_area = "DELETE FROM `interbccs`.`area_proj` WHERE id_area =".$objArea->id_area." AND id_projeto =".$id;
+				$del_area = "DELETE FROM `interbccs_db`.`area_proj` WHERE id_area =".$objArea->id_area." AND id_projeto =".$id;
 				$conn->query($del_area);
 				$objArea = $sel->fetch_object();
 			}
@@ -181,7 +181,7 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 					for (;$objProf->id_professor != NULL && $objProf->id_professor < $val;) {
 						//Remove a tupla
 						if ($objProf->id_professor != $_SESSION['idSave']) {
-							$del_prof = "DELETE FROM `interbccs`.`proj_prof` WHERE id_professor =".$objProf->id_professor." AND id_projeto =".$id;
+							$del_prof = "DELETE FROM `interbccs_db`.`proj_prof` WHERE id_professor =".$objProf->id_professor." AND id_projeto =".$id;
 							$conn->query($del_prof);							
 						}	
 						//Incrementa o obj
@@ -191,14 +191,14 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 					}
 					//Verifica se o id encontrado precisa ser inserido
 					if ($objProf->id_professor != NULL && $val < $objProf->id_professor) {
-						$ins_prof = "INSERT INTO `interbccs`.`proj_prof` (`id_professor`, `id_projeto`) VALUE ('".$val."', '".$id."')";
+						$ins_prof = "INSERT INTO `interbccs_db`.`proj_prof` (`id_professor`, `id_projeto`) VALUE ('".$val."', '".$id."')";
 						$conn->query($ins_prof);
 					}
 					else if ($objProf->id_professor != NULL && $objProf->id_professor == $val) {
 						$objProf = $sel->fetch_object();
 					}
 					else if ($objProf->id_professor == NULL) {
-						$ins_prof = "INSERT INTO `interbccs`.`proj_prof` (`id_professor`, `id_projeto`) VALUE ('".$val."', '".$id."')";
+						$ins_prof = "INSERT INTO `interbccs_db`.`proj_prof` (`id_professor`, `id_projeto`) VALUE ('".$val."', '".$id."')";
 						$conn->query($ins_prof);				
 					}
 				}
@@ -206,12 +206,12 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 				//Se ainda restar tuplas checked para ser removidas
 				while ($objProf->id_professor != NULL) {
 					if ($objProf->id_professor != $_SESSION['idSave']) {						
-					$del_prof = "DELETE FROM `interbccs`.`proj_prof` WHERE id_professor =".$objProf->id_professor." AND id_projeto =".$id;
+					$del_prof = "DELETE FROM `interbccs_db`.`proj_prof` WHERE id_professor =".$objProf->id_professor." AND id_projeto =".$id;
 					$conn->query($del_prof);
 					}
 					$objProf = $sel->fetch_object();
 				}
-//			}
+
 			$_SESSION['mensagem'] = "Atualização feita com sucesso!";
 			header('Location: ./home.php');
 	}
@@ -294,7 +294,8 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 							<?php
 									//Encontra as areas de cada projeto
 									$scriptArea = "SELECT id_area, nome
-																FROM area";
+																FROM area
+																GROUP BY nome";
 							
 									$res_area = $conn->query($scriptArea);
 							
@@ -320,13 +321,15 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 									<label>PROFESSORES</label>
 									<div class="form-group">
 									<?php
-											//Encontra as areas de cada projeto
-											$scriptProf = "SELECT id_professor, nome
-																		FROM professor";
+											//Encontra os professores de cada projeto
+											$scriptProf = "SELECT id_professor, nome, enable
+																		FROM professor
+																		ORDER BY nome ASC";
 
 											$res_prof = $conn->query($scriptProf);
 
 											while ($obj_prof=$res_prof->fetch_object()) {
+												if ($obj_prof->enable) {
 									?>
 												<input type="checkbox" name="checkprof[]" value="<?php echo $obj_prof->id_professor;?>"
 												<?php
@@ -340,6 +343,7 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 												<label><?php echo $obj_prof->nome;?></label>
 									<?php
 												echo '<br>';
+												}	
 											}
 									?>
 									</div>

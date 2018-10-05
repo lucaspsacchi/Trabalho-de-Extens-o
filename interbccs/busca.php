@@ -5,7 +5,7 @@
 	$act = 0;
 	//Home
 	if ($_POST['todos_proj'] == 1) {
-		$scriptSQL = "SELECT id_projeto, nome, descricao, foto
+		$scriptSQL = "SELECT id_projeto, nome, descricao, foto, enable
 									FROM projeto
 									ORDER BY id_projeto DESC";
 
@@ -14,7 +14,7 @@
 	}
 	//Professor
 	else if ($_POST['id_prof'] != NULL) {
-		$scriptSQL = "SELECT id_projeto, nome, descricao, foto
+		$scriptSQL = "SELECT id_projeto, nome, descricao, foto, enable
 									FROM projeto NATURAL JOIN proj_prof
 									WHERE proj_prof.id_professor =".$_POST['id_prof']."
 									ORDER BY id_projeto DESC";
@@ -24,7 +24,7 @@
 	}
 	//Área
 	else if ($_POST['id_area'] != NULL) {
-		$scriptSQL = "SELECT id_projeto, nome, descricao, foto
+		$scriptSQL = "SELECT id_projeto, nome, descricao, foto, enable
 									FROM projeto NATURAL JOIN area_proj
 									WHERE area_proj.id_area =".$_POST['id_area']."
 									ORDER BY id_projeto DESC";
@@ -34,7 +34,7 @@
 	}
 	//Ano
 	else if ($_POST['ano'] != NULL) {
-		$scriptSQL = "SELECT id_projeto, nome, descricao, foto
+		$scriptSQL = "SELECT id_projeto, nome, descricao, foto, enable
 									FROM projeto
 									WHERE data_inicio =".$_POST['ano']."
 									ORDER BY id_projeto DESC";
@@ -46,12 +46,13 @@
 	else if ($_POST['search'] != NULL) {
 		$string = "'%".$_POST['search']."%'";
 
-		$scriptSQL = "SELECT projeto.id_projeto, projeto.nome, projeto.descricao, projeto.foto
+		$scriptSQL = "SELECT projeto.id_projeto, projeto.nome, projeto.descricao, projeto.foto, projeto.enable
 									FROM area, area_proj, projeto, proj_prof, professor
-									WHERE area.id_area = area_proj.id_area AND projeto.id_projeto = area_proj.id_projeto AND projeto.id_projeto = proj_prof.id_projeto AND professor.id_professor = proj_prof.id_professor AND area.nome LIKE ".$string." OR projeto.nome LIKE ".$string." OR professor.nome LIKE ".$string." OR projeto.data_inicio LIKE ".$string."
+									WHERE area.id_area = area_proj.id_area AND projeto.id_projeto = area_proj.id_projeto AND projeto.id_projeto = proj_prof.id_projeto AND professor.id_professor = proj_prof.id_professor AND area.nome LIKE ".$string." OR projeto.nome LIKE ".$string." OR projeto.data_inicio LIKE ".$string."
 									GROUP BY(projeto.id_projeto)";
 
 		$result = $conn->query($scriptSQL);
+		$rows = $result->num_rows;
 		$act = 5;
 	}
 	else {
@@ -113,7 +114,16 @@
 		<?php
 		if ($flag == true) {
 			$cont = 0;
+			if ($act == 5 && !$rows) {
+				$scriptSQL = "SELECT projeto.id_projeto, projeto.nome, projeto.descricao, projeto.foto, projeto.enable
+											FROM (proj_prof NATURAL JOIN projeto), professor 
+											WHERE professor.id_professor = proj_prof.id_professor AND professor.nome LIKE ".$string." OR projeto.alunos LIKE".$string."
+											GROUP BY(projeto.id_projeto)";
+
+				$result = $conn->query($scriptSQL);
+			}
 			while($vetor=$result->fetch_object()) {
+				if ($vetor->enable) {
 		?>
 				<div class="card">
 					<div class="row">
@@ -137,16 +147,17 @@
 				<br>
 		<?php
 				$cont++;
+				}
 			}
 			if (!$cont) {
 			?>
-				<h4><center>Nenhum projeto encontrado</center></h4>
+				<h4><center>Nenhum resultado encontrado</center></h4>
 			<?php				
 			}
 		}
 		else {
 		?>
-			<h4><center>Nenhum projeto encontrado</center></h4>
+			<h4><center>Nenhum resultado encontrado</center></h4>
 		<?php
 			}
 		?>
@@ -155,14 +166,14 @@
 	<br><br>
 	<footer class="mojFooter">
 		<div class="footertexto py-3">
-			<a class="footer-link" href="http://www.sorocaba.ufscar.br/ufscar/">Universidade Federal de São Carlos - Campus Sorocaba</a>
+			<a class="footer-link" href="http://www.sorocaba.ufscar.br/" target="_blank">Universidade Federal de São Carlos - Campus Sorocaba</a>
 			<br>
-			<a class="footer-link" href="https://dcomp.sor.ufscar.br">Departamento de Ciência da Computação</a>
-			<a href="interbccs.html">
+			<a class="footer-link" href="https://dcomp.sor.ufscar.br" target="_blank">Departamento de Ciência da Computação</a>
+			<a href="./interbccs.php">
 				<img src="../Imagens/Inter%20BCCS%20Logo%20Fundo%20Branco.png" class="float-right" alt="logo" width="8%"/>
 			</a>
 			<br><br>
-			
+
 			<p>Rodovia João Leme dos Santos (SP-264), Km 110<br>Bairro do Itinga - Sorocaba - São Paulo - Brasil<br>CEP 18052-780</p>
 			<div class="foot" align="center">© 2018 InterBCCS. All rights reserved.</div>
 		</div>

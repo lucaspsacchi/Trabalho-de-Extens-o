@@ -266,5 +266,53 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 
         });
     </script>	
+
+		<!-- Trigger para validar as entradas do teclado -->
+		<script>
+			//Campo nome
+			var a = document.getElementById('usuario');
+			var b = document.getElementById('password');
+			var c = document.getElementById('nome');
+			var d = document.getElementById('site');
 			
+			a.addEventListener("keydown",
+			function(e) {
+				//Verifica se o evento foi um enter
+				if (e.keyCode == 13) {
+					e.preventDefault();
+					document.getElementById('password').focus();
+				}
+			}
+			);
+			
+			b.addEventListener("keydown",
+			function(e) {
+				//Verifica se o evento foi um enter
+				if (e.keyCode == 13) {
+					e.preventDefault();
+					document.getElementById('nome').focus();
+				}
+			}
+			);
+
+			c.addEventListener("keydown",
+			function(e) {
+				//Verifica se o evento foi um enter
+				if (e.keyCode == 13) {
+					e.preventDefault();
+					document.getElementById('site').focus();
+				}
+			}
+			);
+
+			d.addEventListener("keydown",
+			function(e) {
+				//Verifica se o evento foi um enter
+				if (e.keyCode == 13) {
+					e.preventDefault();
+					document.getElementById('description').focus();
+				}
+			}
+			);						
+		</script>
 </html>

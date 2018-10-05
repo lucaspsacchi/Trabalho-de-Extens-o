@@ -3,7 +3,8 @@
 
 	//Realiza uma busca no banco de dados para listar os professores
 	$scriptSQL = "SELECT id_area, nome, descricao, foto
-								FROM area";
+								FROM area
+								ORDER BY nome ASC";
 
 	$result = $conn->query($scriptSQL);
 ?>
@@ -21,7 +22,7 @@
 	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
 	<link rel="stylesheet" href="../js/bootstrap.min.js">
 	<link rel="stylesheet" href="../css/navbarfooter.css">
-	<link rel="stylesheet" href="../css/homeStyle.css">
+	<link rel="stylesheet" href="../css/areaStyle.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
@@ -58,7 +59,6 @@
 
 	<div class="container">
 		
-		
 		<?php
 			while($vetor=$result->fetch_object()) {
 		?>
@@ -71,8 +71,7 @@
 						</div>
 						<div class="col-xl-8 col-lg-7">
 							<div class="card-block">
-								<h4 class="card-text"><strong><?php echo $vetor->nome;?></strong></h4>
-								<p class="card-text"><?php echo $vetor->descricao;?></p>
+								<p class="card-desc"><?php echo $vetor->descricao;?></p>
 								<form method="post" action="./busca.php">
 									<input type="hidden" name="id_area" value="<?php echo $vetor->id_area;?>">
 									<button class="btn btn-secondary">Ver projetos</button>
@@ -91,10 +90,10 @@
 	<br><br>
 	<footer class="mojFooter">
 		<div class="footertexto py-3">
-			<a class="footer-link" href="http://www.sorocaba.ufscar.br/ufscar/">Universidade Federal de São Carlos - Campus Sorocaba</a>
+			<a class="footer-link" href="http://www.sorocaba.ufscar.br/" target="_blank">Universidade Federal de São Carlos - Campus Sorocaba</a>
 			<br>
-			<a class="footer-link" href="https://dcomp.sor.ufscar.br">Departamento de Ciência da Computação</a>
-			<a href="interbccs.html">
+			<a class="footer-link" href="https://dcomp.sor.ufscar.br" target="_blank">Departamento de Ciência da Computação</a>
+			<a href="./interbccs.php">
 				<img src="../Imagens/Inter%20BCCS%20Logo%20Fundo%20Branco.png" class="float-right" alt="logo" width="8%"/>
 			</a>
 			<br><br>
