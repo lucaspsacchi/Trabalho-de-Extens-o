@@ -31,8 +31,6 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
-    <footer>
-    </footer>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="utf-8">

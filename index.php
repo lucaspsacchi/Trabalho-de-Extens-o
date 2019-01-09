@@ -1,3 +1,3 @@
 <?php
-    header("Location: ./interbccs/interbccs.php");
+    header("Location: ./home.php");
 ?>

@@ -1,7 +1,6 @@
 User-agent: *
-
 Disallow: /cadastro/
 Disallow: /Imagens/
 Disallow: /connection/
-Allow: /interbccs/
+Allow: /
 Allow: /index.php
