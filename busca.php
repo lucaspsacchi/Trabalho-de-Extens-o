@@ -2,6 +2,7 @@
   include('./connection/connection.php');
 
 	$flag = true;
+	$act = 0;
 	//Home
 	if ($_POST['todos_proj'] == 1) {
 		$scriptSQL = "SELECT id_projeto, nome, descricao, foto, enable
@@ -48,6 +49,15 @@
 
 		$result = $conn->query($scriptSQL);
 		$rows = $result->num_rows;
+		if ($rows == 0) {
+			$scriptSQL = "SELECT projeto.id_projeto, projeto.nome, projeto.descricao, projeto.foto, projeto.enable
+			FROM (proj_prof NATURAL JOIN projeto), professor 
+			WHERE professor.id_professor = proj_prof.id_professor AND professor.nome LIKE ".$string." OR projeto.alunos LIKE".$string."
+			GROUP BY(projeto.id_projeto)";
+
+			$result = $conn->query($scriptSQL);
+			$rows = $result->num_rows;
+		}
 	}
 	else {
 		$flag = false;
@@ -77,32 +87,26 @@
 	<div class="container">
 
 		<?php
-		if ($flag == true) {
+		if ($flag == true) { // Se foi feito alguma busca
 			$cont = 0;
-			if ($act == 5 && !$rows) {
-				$scriptSQL = "SELECT projeto.id_projeto, projeto.nome, projeto.descricao, projeto.foto, projeto.enable
-											FROM (proj_prof NATURAL JOIN projeto), professor 
-											WHERE professor.id_professor = proj_prof.id_professor AND professor.nome LIKE ".$string." OR projeto.alunos LIKE".$string."
-											GROUP BY(projeto.id_projeto)";
-
-				$result = $conn->query($scriptSQL);
-			}
 			while($vetor=$result->fetch_object()) {
 				if ($vetor->enable) {
 		?>
 				<div class="card">
 					<div class="row">
+						<!-- Imagem do projeto -->
 						<div class="col-xl-4 col-lg-5">
 							<div class="container-img-home">
 								<img class="card-img" src="./Imagens/<?php echo $vetor->foto;?>">
 							</div>
 						</div>
+						<!-- Título, descrição e botão -->
 						<div class="col-xl-8 col-lg-7">
 							<div class="card-block-home">
 								<h4 class="card-text h4-home"><strong><?php echo $vetor->nome;?></strong></h4>
 								<p class="card-text p-home"><?php echo $vetor->descricao;?></p>
 								<form method="POST" action="./projeto.php">
-									<input type="hidden" name="id_proj" value="<?php echo $vetor->id_projeto;?>">
+									<input type="hidden" name="id_proj" value="<?php echo $vetor->id_projeto;?>"> <!-- Id do proheto é passado pelo método post -->
 									<input type="submit" class="btn btn-secondary btn-home" name="botao" value="Saiba mais">
 								</form>
 							</div>
@@ -114,13 +118,13 @@
 				$cont++;
 				}
 			}
-			if (!$cont) {
+			if (!$cont) { // Não tem nenhuma tupla para aquela busca
 			?>
 				<h4 class="h4-home"><center>Nenhum resultado encontrado</center></h4>
 			<?php				
 			}
 		}
-		else {
+		else { // Não encontrou nenhuma busca, ou seja, entrou na url busca sem vir de outra página por href
 		?>
 			<h4 class="h4-home"><center>Nenhum resultado encontrado</center></h4>
 		<?php

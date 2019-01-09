@@ -45,69 +45,114 @@ if (isset($_POST['inputUser'])) {
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="utf-8">
-				<meta name="author" content="Lucas Penteado Sacchi">
-				<meta name="author" content="Sofia de Almeida Machado da Silveira">			
+        <meta name="author" content="Lucas Penteado Sacchi">
+        <meta name="author" content="Sofia de Almeida Machado da Silveira">			
         <title>InterBCCS</title>
         <link rel="shortcut icon" type="image/png" href="../Imagens/Inter%20BCCS%20Logo%20Fundo%20Branco.png">
         
         <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="../css/loginStyle.css">
         <link rel="stylesheet" href="../js/bootstrap.min.js">
-				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     </head>
     <body>
 
-			<nav class="navbar navbar-expand-sm my-nav">
+			<!-- <nav class="navbar navbar-expand-sm my-nav">
 					<a class="navbar-brand">
 							<img src="../Imagens/Inter%20BCCS%20Logo%20Fundo%20Branco.png" width="5%" height="5%" alt="logo">
 					</a>
 					<h4>INTERBCCS</h4>
-			</nav>
+			</nav> -->
 
 
+        <!-- "Margin top" -->
+        <br><br>
 
-        <br><br><br>
-			
         <div class="container">
-            <form class="text-center" action="login.php" method="POST">
-                <h1 class="h3 mb-3">Login</h1>
-								<?php
-								if ($erro_login == 1) {
-									echo '<div class="form-group row justify-content-center"><div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"><div class="alert alert-danger">
-										<strong>Usuário e/ou senha incorretos</strong><br>
-										Digite novamente os seus dados.</div></div></div>';
-								}
-								?>
-                <div class="form-group row justify-content-center">
-                    <label for="loginUser" class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-form-label">Usuário</label>
-                    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
-                        <input type="text" class="form-control" name="inputUser" pattern=".{4,20}" required autofocus>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 custom-box">
+                <form class="custom-form" action="login.php" method="POST">
+                    <div class="text-center"> <!-- Imagem e título centralizado -->
+                        <a href="#"><img src="../Imagens/Inter%20BCCS%20Logo%20Fundo%20Branco.png" width="5%" height="5%" alt="logo"></a> <!-- Logo -->
+                        <br><br>
+                        <h1 class="h3 mb-3">Acesse sua conta INTERBCCS</h1>
+                            <?php
+                            // Mensagem de erro caso o usuário informe usuário ou senha incorreto
+                            if ($erro_login == 1) {
+                                echo '<div class="form-group row justify-content-center"><div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"><div class="alert alert-danger">
+                                    <strong>Usuário e/ou senha incorretos</strong><br>
+                                    Digite novamente os seus dados.</div></div></div>';
+                            }
+                            ?>
                     </div>
-                </div>
-                <div class="form-group row justify-content-center">
-                    <label for="loginPassword" class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-form-label">Senha</label>
-                    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
-                        <input type="password" class="form-control" name="inputPassword" placeholder="4 a 20 caracteres" pattern=".{4,20}" required>
+                    <div class="d-flex justify-content-center">
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <div class="card shadow"> <!-- Shadow na borda do card -->
+                                <div class="card-body">
+                                    <!-- Group para usuário -->
+                                    <div class="form-group">
+                                        <div class="row d-flex">
+                                            <label for="loginUser" class="">Usuário</label>
+                                        </div>
+                                        <div class="row d-flex">
+                                            <div class="custom-input">
+                                                <input type="text" class="form-control" id="inputUser" name="inputUser" pattern=".{4,20}" required autofocus>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Group para senha -->
+                                    <div class="form-group">
+                                        <div class="row d-flex justify-content-between"> <!-- Between está posicionando senha e esqueceu nas extremidades -->
+                                            <div class="">
+                                                <label for="loginPassword" class="">Senha</label>
+                                            </div>
+                                            <div class="">
+                                                <label for="esqueceu" class=""><a href="./esqueceu.php">Esqueceu sua senha?</a></label>
+                                            </div>
+                                        </div>
+                                        <div class="row d-flex">
+                                            <div class="custom-input">
+                                                <input type="password" class="form-control" id="inputPassword" name="inputPassword" placeholder="4 a 20 caracteres" pattern=".{4,20}" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Group para botão entrar -->
+                                    <div class="form-group">
+                                        <div class="row d-flex">
+                                            <div class="btn-custom">
+                                                <button type="submit" class="btn btn-secondary btn-block">Entrar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group row justify-content-end">
-                    <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
-                        <button type="submit" class="btn btn-secondary">Entrar</button>
-                    </div>
-                </div>
-							
-            </form>
+                </form>
+            </div>
         </div>
 
 
         <br><br>
 
-			<footer>
-				<div class="footertexto">
-           <div class="foot" align="center">© 2018 InterBCCS. All rights reserved.</div>
-				</div>
-			</footer>
+		<!-- Footer -->
+		<?php include '../includes/footer-cad.php'?>
 
     </body>
 </html>
+
+<script>
+    // Trigger para alterar o tab de "Esqueceu a sua senha?" para Senha
+    //Campo nome
+    var x = document.getElementById('inputUser');
+
+    x.addEventListener("keydown",
+    function(e) {
+        //Verifica se o evento foi um enter
+        if (e.keyCode == 9) {
+            e.preventDefault();
+            document.getElementById('inputPassword').focus();
+        }
+    }
+    );    
+</script>

@@ -33,7 +33,7 @@
 		<div class="row text-center">
 			<?php
 				$count = 1;
-				while($vetor=$result->fetch_object()) {
+				while($vetor=$result->fetch_object()) { // Exibe todos os valores dos projetos para cada tupla retornada do bd
 			?>
 					<div class="col-lg-3 col-md-4 col-sm-6">
 						<div class="card">

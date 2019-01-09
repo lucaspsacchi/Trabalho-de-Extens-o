@@ -5,7 +5,8 @@
 	$scriptSQL = "SELECT id_projeto, foto, nome, descricao
 								FROM projeto
 								WHERE enable = 1
-								ORDER BY id_projeto DESC";
+								ORDER BY id_projeto DESC
+								LIMIT 4";
 
 	$result = $conn->query($scriptSQL);
 ?>
@@ -31,23 +32,24 @@
 
 	<div class="container">
 		<?php
-			$count = 0;
-			while(($vetor=$result->fetch_object()) && $count != 4) {
+			while(($vetor=$result->fetch_object())) { // Exibe os 4 projetos mais recentes
 		?>
 				<div class="card">
 					<div class="row">
+						<!-- Imagem do projeto -->
 						<div class="col-xl-4 col-lg-5 col-md-12">
 							<div class="container-img-home">
 								<img class="card-img" src="./Imagens/<?php echo $vetor->foto;?>">
 							</div>
 						</div>
 						<div class="col-xl-8 col-lg-7 col-md-12">
+							<!-- Título, descrição e botão -->
 							<div class="card-block-home">
 								<h4 class="card-text h4-home"><strong><?php echo $vetor->nome;?></strong></h4>
 								<p class="card-text p-home"><?php echo $vetor->descricao;?></p>
 								<!--<button class="btn btn-secondary">Saiba mais</button>-->
 								<form method="POST" action="./projeto.php">
-									<input type="hidden" name="id_proj" value="<?php echo $vetor->id_projeto;?>">
+									<input type="hidden" name="id_proj" value="<?php echo $vetor->id_projeto;?>"> <!--Id do projeto é passado pelo método post -->
 									<input type="submit" class="btn btn-secondary btn-home" name="botao" value="Saiba mais">
 								</form>
 							</div>
@@ -56,7 +58,6 @@
 				</div>
 				<br>
 		<?php
-				$count++;
 			}
 		?>
 		

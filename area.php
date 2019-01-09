@@ -31,20 +31,22 @@
 	<div class="container">
 		
 		<?php
-			while($vetor=$result->fetch_object()) {
+			while($vetor=$result->fetch_object()) { // Exibe todas as áreas retornadas do bd
 		?>
 				<div class="card">
 					<div class="row">
+						<!-- Imagem da área -->
 						<div class="col-xl-4 col-lg-5">
 							<div class="container-img-area">
 								<img class="card-img" src="./Imagens/<?php echo $vetor->foto;?>">
 							</div>
 						</div>
+						<!-- Descrição e botão -->
 						<div class="col-xl-8 col-lg-7">
 							<div class="card-block-area">
 								<p class="card-desc p-area"><?php echo $vetor->descricao;?></p>
-								<form class="btn-area" method="post" action="./busca.php">
-									<input type="hidden" name="id_area" value="<?php echo $vetor->id_area;?>">
+								<form class="btn-area" method="post" action="./busca.php"> <!-- Redireciona para a página busca com o id da área escolhida -->
+									<input type="hidden" name="id_area" value="<?php echo $vetor->id_area;?>"> <!-- É passado o id da área por post -->
 									<button class="btn btn-secondary">Ver projetos</button>
 								</form>
 							</div>
