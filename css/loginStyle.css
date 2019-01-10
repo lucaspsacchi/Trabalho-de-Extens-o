@@ -6,6 +6,7 @@
 body {
 	margin: 0;
 	font-family: Glacial Indifference;
+	background-color: rgb(249,249,249);
 }
 
 .form-group {
@@ -29,7 +30,7 @@ body {
 	position: fixed;
 	bottom: 0;
 	width: 100%;
-	background-color: #DDD;
+	background-color: #d1d1d1;
 	color: black;
 	font-size: 12.5px;
 	margin-bottom: -5px;

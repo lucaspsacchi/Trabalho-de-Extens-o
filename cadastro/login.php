@@ -8,9 +8,9 @@ if (isset($_POST['inputUser'])) {
     $senha = addslashes($_POST['inputPassword']);
 
     $string_query = "SELECT *
-										 FROM professor 
-										 WHERE usuario='".$user."' and senha=MD5('".$senha."')
-										 LIMIT 1;";
+                    FROM professor 
+                    WHERE usuario='".$user."' and senha=MD5('".$senha."')
+                    LIMIT 1;";
 
 
     if ($result = $conn->query($string_query)) {
@@ -40,8 +40,6 @@ if (isset($_POST['inputUser'])) {
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
-    <footer>
-    </footer>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="utf-8">
@@ -120,7 +118,7 @@ if (isset($_POST['inputUser'])) {
                                     <div class="form-group">
                                         <div class="row d-flex">
                                             <div class="btn-custom">
-                                                <button type="submit" class="btn btn-secondary btn-block">Entrar</button>
+                                                <button type="submit" class="btn btn-success btn-block">Entrar</button>
                                             </div>
                                         </div>
                                     </div>

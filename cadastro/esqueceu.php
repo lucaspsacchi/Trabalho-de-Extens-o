@@ -116,7 +116,7 @@ if (isset($_POST['inputUser'])) {
                                     <div class="form-group">
                                         <div class="row d-flex">
                                             <div class="btn-custom">
-                                                <button type="submit" class="btn btn-secondary btn-block">Entrar</button>
+                                                <button type="submit" class="btn btn-success btn-block">Entrar</button>
                                             </div>
                                         </div>
                                     </div>
