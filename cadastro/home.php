@@ -39,8 +39,14 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
         <title>InterBCCS</title>
         <link rel="shortcut icon" type="image/png" href="../Imagens/Inter%20BCCS%20Logo%20Fundo%20Branco.png">
         
-        <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
-        <link rel="stylesheet" href="../js/bootstrap.min.js">
+        <!-- <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+		<link rel="stylesheet" href="../js/bootstrap.min.js">
+		<link rel="stylesheet" href="../js/bootstrap.bundle.min.js"> -->
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
 		<link rel="stylesheet" href="../css/navbarfooter.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -51,10 +57,30 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 
 		<!-- Navbar -->
 		<?php include '../includes/nav-cad.php'?>
-        
-				<div class="container">
-					<center><a href="cadastro_projeto.php"><button class="btn btn-secondary">ADICIONAR PROJETO</button></a></center>
-			
+
+				<div class="container">			
+					<center>
+						<!-- <div class="btn-group">
+							<button type="button" class="btn btn-secondary dropdown-toggle btn-novo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								NOVO
+							</button>
+							<div class="dropdown-menu dropdown-menu-right">
+								<button class="dropdown-item" type="button">Projeto</button>
+								<button class="dropdown-item" type="button">Professor</button>
+							</div>
+						</div> -->
+
+						<div class="btn-group dropright">
+							<button type="button" class="btn btn-secondary dropdown-toggle btn-novo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								NOVO
+							</button>
+							<div class="dropdown-menu">
+								<a class="dropdown-item" href="cadastro_projeto.php">Projeto</a>
+    							<a class="dropdown-item" href="#">Professor</a>
+							</div>
+						</div>						
+					</center>
+
 					<br>
 					
 					<div id="lista_produto" class="list-group">

@@ -145,6 +145,9 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 
 			<br><br>
 			<div class="container">
+				<!-- Breadcrumb -->
+				<label><a href="./home.php">Home</a> > Perfil</label>
+				<hr><br>
 
 				<form name="form" class="form-horizontal" action="#" method="post" enctype="multipart/form-data">
 					<div class="text-center">

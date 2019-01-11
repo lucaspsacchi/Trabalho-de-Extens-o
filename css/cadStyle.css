@@ -1,6 +1,3 @@
-.nav-link:hover {
-	color:#952427;
-}
 
 body {
   display: flex;
@@ -60,4 +57,34 @@ body {
 
 #listItem:hover {
 	background-color: #DDD;
+}
+
+/* Teste */
+.nav-link {
+	color: #952427;
+	font-size: 17px;
+	margin-top: 10px;
+	padding-bottom: 0px;
+	padding-top: 0px;
+	padding-right: 10px;
+	padding-left: 10px;
+}
+
+.nav-link:hover {
+	color:#5A6268;
+	border-color: #952427;
+}
+
+.nav-link-custom {
+	margin-right: 15px;
+	border-left: 1px solid #952427;
+}
+
+.btn-novo {
+	width: 100px;
+}
+
+.dropdown-item:hover {
+	background-color: #d1d1d1;
+	color: #952427;
 }

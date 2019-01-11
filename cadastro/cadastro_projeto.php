@@ -121,8 +121,6 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
-    <footer>
-    </footer>
     <head>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta charset="utf-8">
@@ -146,12 +144,18 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 
         <br><br>
 				<div class="container">
-
+					
+					<!-- Breadcrumb -->
+					<label><a href="./home.php">Home</a> > Cadastrar Projeto</label>
+					<hr><br>
+					
 					<form name="form" class="form-horizontal" method="post" enctype="multipart/form-data">
 						<div class="text-center">
 							<h2>Cadastrar projeto</h2>
-							<p>Insira nos campos abaixo os dados do projeto</p>
 						</div>
+						<br>
+						<h6><span class="ast">* Campos obrigatórios</span></h6>
+						<hr>						
 						<div class="row">
 							<div class="col-7">
 								<div class="form-group">
@@ -159,14 +163,13 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 									<input type="text" class="form-control" id="nome" name="nome" maxlength="150" value="" required placeholder="Insira o nome do projeto">
 								</div>
 							</div>
-							<div class="col-5 vertical-line">
+							<div class="col-5">
 								<div class="form-group">
 									<label for="usr">LINK DO PROJETO</label>
 									<input type="text" class="form-control" id="site" name="site" maxlength="150" value="" placeholder="Insira a url (opcional)">
 								</div>
 							</div>
 						</div>
-						<hr>
 						<div class="form-group">
 							<label for="comment">DESCRIÇÃO<span class="ast">*</span></label>
 							<textarea type="text" name="descricao" class="form-control" rows="3" required maxlength="1000" id="description" placeholder="Insira a descrição do projeto"></textarea>
@@ -218,8 +221,15 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 									<label>ANO DE INÍCIO DO PROJETO<span class="ast">*</span></label>
 									<input type="text" id="data" name="data" pattern="{0,9}[4]" value="" placeholder="AAAA" maxlength="4" size="5" style="text-align:center;" required>
 								</div>
+								<div class="form-group">
+									<label>SEMESTRE DE INICIO<span class="ast">*</span></label><br>
+									<input type="radio" id="sem_ini" name="sem_ini" value="0" checked>
+									<label> Primeiro</label><br>
+									<input type="radio" id="sem_ini" name="sem_ini" value="1">
+									<label> Segundo</label>
+								</div>
 							</div>
-							<div class="col-3 vertical-line">
+							<div class="col-2 vertical-line">
 								<div class="form-group">
 									<label>STATUS DO PROJETO<span class="ast">*</span></label><br>
 									<input type="radio" id="andamento" name="andamento" value="0" checked>
@@ -228,7 +238,18 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 									<label> Concluído</label>
 								</div>
 							</div>
-							<div class="col-6 vertical-line">
+							<div class="col-2 vertical-line">
+								<div class="form-group">
+									<label>TIPO DO PROJETO<span class="ast">*</span></label><br>
+									<input type="radio" id="tipo_proj" name="tipo_proj" value="0" checked>
+									<label> Projeto pessoal</label><br>
+									<input type="radio" id="concluido" name="tipo_proj" value="1">
+									<label> Projeto de disciplina</label><br>
+									<input type="radio" id="tipo_proj" name="tipo_proj" value="2">
+									<label> Projeto extensão</label>									
+								</div>
+							</div>
+							<div class="col-5 vertical-line">
 								<center>
 									<div class="form-group">
 										<img id="photo" src="../Imagens/imgindisponivel.jpg" class="img-rounded" width="330" height="210">
@@ -248,10 +269,12 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 								</div>
 							</div>
 						</div>
-						<h6><span class="ast">* Campos obrigatórios</span></h6>
-						<hr>
 						<div class="d-flex flex-row justify-content-end col-12">
-								<button class="btn btn-secondary" name="salvar_dados">Salvar</button>
+							<div class="row">
+								<a class="btn btn-secondary" href="./home.php" name="cancelar_dados">Cancelar</a>
+								<div class="" style="border-left: 1px solid #5A6268; margin-left: 15px; margin-right: 15px;"></div>
+								<button class="btn btn-success" name="salvar_dados">Salvar</button>
+							</div>
 						</div>
 						<div id="erro"></div>
 					</form>

@@ -20,6 +20,10 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 	$vetor = $result->fetch_object();
 
 
+	if (isset($_POST['cancelar_dados'])) {
+		header('Location: ./home.php');
+	}
+
 	if (isset($_POST['remover_dados'])) {
 		$upd = "UPDATE `interbccs_db`.`projeto`
 		SET	`enable` = '0'
@@ -243,11 +247,16 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
         <br><br>
 				<div class="container">
 
+					<!-- Breadcrumb -->
+					<label><a href="./home.php">Home</a> > Alterar Projeto</label>
+					<hr><br>
+
 					<form name="form" class="form-horizontal" action="./alterar_cadastro.php?id=<?php echo $id;?>" method="post" enctype="multipart/form-data">
 						<div class="text-center">
 								<h2>Alterar projeto</h2>
-								<p>Altere os dados dos campos desejados</p>
 						</div>
+						<h6><span class="ast">* Campos obrigatórios</span></h6>
+						<hr>
 						<div class="row">
 							<div class="col-7">
 								<div class="form-group">
@@ -338,8 +347,15 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 									<label>ANO DE INÍCIO DO PROJETO<span class="ast">*</span></label>
 									<input type="text" id="data" name="data" pattern="{0,9}[4]" value="<?php echo $vetor->data_inicio;?>" placeholder="AAAA" maxlength="4" size="5" style="text-align:center;" required>
 								</div>
+								<div class="form-group">
+									<label>SEMESTRE DE INICIO<span class="ast">*</span></label><br>
+									<input type="radio" id="sem_ini" name="sem_ini" value="0">
+									<label> Primeiro</label><br>
+									<input type="radio" id="sem_ini" name="sem_ini" value="1">
+									<label> Segundo</label>
+								</div>								
 							</div>
-							<div class="col-3 vertical-line">
+							<div class="col-2 vertical-line">
 								<div class="form-group">
 									<label>STATUS DO PROJETO<span class="ast">*</span></label><br>
 									<input type="radio" id="andamento" name="andamento" <?php if ($vetor->concluido == false) echo 'checked';?> value="0">
@@ -348,7 +364,18 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 									<label> Concluído</label>
 								</div>
 							</div>
-							<div class="col-6 vertical-line">
+							<div class="col-2 vertical-line">
+								<div class="form-group">
+									<label>TIPO DO PROJETO<span class="ast">*</span></label><br>
+									<input type="radio" id="tipo_proj" name="tipo_proj" value="0"> <!-- Depois terminar com <?php if ($vetor->concluido == false) echo 'checked';?> value="0" -->
+									<label> Projeto pessoal</label><br>
+									<input type="radio" id="tipo_proj" name="tipo_proj" value="1">
+									<label> Projeto de disciplina</label><br>
+									<input type="radio" id="tipo_proj" name="tipo_proj" value="2">
+									<label> Projeto extensão</label>
+								</div>
+							</div>							
+							<div class="col-5 vertical-line">
 								<center>
 									<div class="form-group">
 										<img id="photo" src="../Imagens/<?php echo $vetor->foto;?>" class="img-rounded" width="280" height="210">
@@ -370,12 +397,14 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 									<textarea type="text" name="alunos" class="form-control" rows="2" maxlength="200" id="alunos" placeholder="Insira os nomes dos alunos participantes"><?php echo $vetor->alunos;?></textarea>
 								</div>
 							</div>
-						</div>
-						<h6><span class="ast">* Campos obrigatórios</span></h6>
-						<hr>						
+						</div>				
 						<div class="d-flex flex-row justify-content-between col-12">
-								<button class="btn btn-danger" name="remover_dados">Remover</button>
-								<button class="btn btn-secondary" name="salvar_dados">Salvar</button>
+							<button class="btn btn-danger" name="remover_dados">Remover</button>
+							<div class="row">
+								<a class="btn btn-secondary" href="./home.php" name="cancelar_dados">Cancelar</a>
+								<div class="" style="border-left: 1px solid #5A6268; margin-left: 15px; margin-right: 15px;"></div>
+								<button class="btn btn-success" name="salvar_dados">Salvar</button>
+							</div>
 						</div>
 					</form>
 				</div>

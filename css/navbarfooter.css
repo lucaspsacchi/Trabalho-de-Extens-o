@@ -12,10 +12,6 @@ body {
   background-color: rgb(249,249,249);
 }
 
-.nav-link {
-  color: black;
-}
-
 .active {
   background-color: #952427;
   color: white;
@@ -61,4 +57,43 @@ body {
 .card-img {
 	width: 330px;
 	height: 210px;
+}
+
+/* Navbar */
+
+#nav-space {
+  padding-left: 20px;
+}
+
+.nav-anc {
+  padding-right: 10px;
+  text-decoration: none !important;
+}
+
+/* Botão do buscar */
+.btn-light {
+  margin-left: 10px;
+  background-color: #d1d1d1;
+  color: #952427;
+  border-color: #952427;
+}
+
+.btn-light:hover {
+  background-color: #5A6268;
+  color: white;
+  border-color: #5A6268;
+}
+
+
+
+.form-custom {
+  height: 40px;
+  width: 300px;
+  background-color: rgb(226, 226, 226);
+  color: black;
+  border-color: #cacaca;
+}
+
+.container {
+  margin-top: 30px !important;
 }
