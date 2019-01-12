@@ -20,13 +20,9 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 	$vetor = $result->fetch_object();
 
 
-	if (isset($_POST['cancelar_dados'])) {
-		header('Location: ./home.php');
-	}
-
 	if (isset($_POST['remover_dados'])) {
-		$upd = "UPDATE `interbccs_db`.`projeto`
-		SET	`enable` = '0'
+		$upd = "UPDATE projeto
+		SET	enable = '0'
 		WHERE id_projeto = ".$id.";";
 
 		if (mysqli_query($conn, $upd) == TRUE) {
@@ -91,25 +87,25 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 		
 		if ($var_site) {
 			if ($var_alunos) {
-				$insertSQL = "UPDATE `interbccs_db`.`projeto`
-				SET `nome` = '".$_POST['nome']."', `descricao` = '".$_POST['descricao']."', `data_inicio` = '".$_POST['data']."', `concluido` = '".$_POST['andamento']."', `site_proj` = '".$_POST['site']."', `alunos` = '".$_POST['alunos']."', `foto` = '".$novoNome."'
+				$insertSQL = "UPDATE projeto
+				SET nome = '".$_POST['nome']."', descricao = '".$_POST['descricao']."', data_inicio = '".$_POST['data']."', concluido = '".$_POST['andamento']."', site_proj = '".$_POST['site']."', alunos = '".$_POST['alunos']."', foto = '".$novoNome."'
 				WHERE id_projeto = ".$id.";";				
 			}
 			else {
-				$insertSQL = "UPDATE `interbccs_db`.`projeto`
-				SET `nome` = '".$_POST['nome']."', `descricao` = '".$_POST['descricao']."', `data_inicio` = '".$_POST['data']."', `concluido` = '".$_POST['andamento']."', `site_proj` = '".$_POST['site']."', `foto` = '".$novoNome."'
+				$insertSQL = "UPDATE projeto
+				SET nome = '".$_POST['nome']."', descricao = '".$_POST['descricao']."', data_inicio = '".$_POST['data']."', concluido = '".$_POST['andamento']."', site_proj = '".$_POST['site']."', foto = '".$novoNome."'
 				WHERE id_projeto = ".$id.";";					
 			}
 		}
 		else {
 			if ($var_alunos) {
-				$insertSQL = "UPDATE `interbccs_db`.`projeto`
-				SET `nome` = '".$_POST['nome']."', `descricao` = '".$_POST['descricao']."', `data_inicio` = '".$_POST['data']."', `concluido` = '".$_POST['andamento']."', `alunos` = '".$_POST['alunos']."', `foto` = '".$novoNome."'
+				$insertSQL = "UPDATE projeto
+				SET nome = '".$_POST['nome']."', descricao = '".$_POST['descricao']."', data_inicio = '".$_POST['data']."', concluido = '".$_POST['andamento']."', alunos = '".$_POST['alunos']."', foto = '".$novoNome."'
 				WHERE id_projeto = ".$id.";";						
 			}
 			else {
-				$insertSQL = "UPDATE `interbccs_db`.`projeto`
-				SET `nome` = '".$_POST['nome']."', `descricao` = '".$_POST['descricao']."', `data_inicio` = '".$_POST['data']."', `concluido` = '".$_POST['andamento']."', `foto` = '".$novoNome."'
+				$insertSQL = "UPDATE projeto
+				SET nome = '".$_POST['nome']."', descricao = '".$_POST['descricao']."', data_inicio = '".$_POST['data']."', concluido = '".$_POST['andamento']."', foto = '".$novoNome."'
 				WHERE id_projeto = ".$id.";";					
 			}		
 		}
@@ -132,9 +128,9 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 		}
 
 		//Update dos dados das áreas
-		$selArea = "SELECT `id_area`
-		FROM `area_proj`
-		WHERE `id_projeto` ='".$id."'";
+		$selArea = "SELECT id_area
+		FROM area_proj
+		WHERE id_projeto ='".$id."'";
 		
 		$sel = $conn->query($selArea);
 		$objArea = $sel->fetch_object();
@@ -143,7 +139,7 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 			foreach ($_POST['checkarea'] as $key => $value) {
 					for (;$objArea->id_area != NULL && $objArea->id_area < $value;) {
 						//Remove a tupla
-						$del_area = "DELETE FROM `interbccs_db`.`area_proj` WHERE id_area =".$objArea->id_area." AND id_projeto =".$id;
+						$del_area = "DELETE FROM area_proj WHERE id_area =".$objArea->id_area." AND id_projeto =".$id;
 						$conn->query($del_area);
 						//Incrementa o obj
 						if ($objArea->id_area != NULL) {
@@ -152,30 +148,30 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 					}
 					//Verifica se o id encontrado precisa ser inserido
 					if ($objArea->id_area != NULL && $value < $objArea->id_area) {
-						$ins_area = "INSERT INTO `interbccs_db`.`area_proj` (`id_area`, `id_projeto`) VALUE ('".$value."', '".$id."')";
+						$ins_area = "INSERT INTO area_proj (id_area, id_projeto) VALUE ('".$value."', '".$id."')";
 						$conn->query($ins_area);
 					}
 					else if ($objArea->id_area != NULL && $objArea->id_area == $value) {
 						$objArea = $sel->fetch_object();
 					}
 					else if ($objArea->id_area == NULL) {
-						$ins_area = "INSERT INTO `interbccs_db`.`area_proj` (`id_area`, `id_projeto`) VALUE ('".$value."', '".$id."')";
+						$ins_area = "INSERT INTO area_proj (id_area, id_projeto) VALUE ('".$value."', '".$id."')";
 						$conn->query($ins_area);				
 					}
 				}
 
 			//Se ainda restar tuplas checked para ser removidas
 			while ($objArea->id_area != NULL) {
-				$del_area = "DELETE FROM `interbccs_db`.`area_proj` WHERE id_area =".$objArea->id_area." AND id_projeto =".$id;
+				$del_area = "DELETE FROM area_proj WHERE id_area =".$objArea->id_area." AND id_projeto =".$id;
 				$conn->query($del_area);
 				$objArea = $sel->fetch_object();
 			}
 		}
 			
 			//Update dos dados dos professores
-			$selProf = "SELECT `id_professor`
-			FROM `proj_prof`
-			WHERE `id_projeto` ='".$id."' AND `id_projeto` !=".$_SESSION['idSave'];
+			$selProf = "SELECT id_professor
+			FROM proj_prof
+			WHERE id_projeto ='".$id."' AND id_projeto !=".$_SESSION['idSave'];
 
 			$sel = $conn->query($selProf);
 			$objProf = $sel->fetch_object();
@@ -185,7 +181,7 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 					for (;$objProf->id_professor != NULL && $objProf->id_professor < $val;) {
 						//Remove a tupla
 						if ($objProf->id_professor != $_SESSION['idSave']) {
-							$del_prof = "DELETE FROM `interbccs_db`.`proj_prof` WHERE id_professor =".$objProf->id_professor." AND id_projeto =".$id;
+							$del_prof = "DELETE FROM proj_prof WHERE id_professor =".$objProf->id_professor." AND id_projeto =".$id;
 							$conn->query($del_prof);							
 						}	
 						//Incrementa o obj
@@ -195,14 +191,14 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 					}
 					//Verifica se o id encontrado precisa ser inserido
 					if ($objProf->id_professor != NULL && $val < $objProf->id_professor) {
-						$ins_prof = "INSERT INTO `interbccs_db`.`proj_prof` (`id_professor`, `id_projeto`) VALUE ('".$val."', '".$id."')";
+						$ins_prof = "INSERT INTO proj_prof (id_professor, id_projeto) VALUE ('".$val."', '".$id."')";
 						$conn->query($ins_prof);
 					}
 					else if ($objProf->id_professor != NULL && $objProf->id_professor == $val) {
 						$objProf = $sel->fetch_object();
 					}
 					else if ($objProf->id_professor == NULL) {
-						$ins_prof = "INSERT INTO `interbccs_db`.`proj_prof` (`id_professor`, `id_projeto`) VALUE ('".$val."', '".$id."')";
+						$ins_prof = "INSERT INTO proj_prof (id_professor, id_projeto) VALUE ('".$val."', '".$id."')";
 						$conn->query($ins_prof);				
 					}
 				}
@@ -210,7 +206,7 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 				//Se ainda restar tuplas checked para ser removidas
 				while ($objProf->id_professor != NULL) {
 					if ($objProf->id_professor != $_SESSION['idSave']) {						
-					$del_prof = "DELETE FROM `interbccs_db`.`proj_prof` WHERE id_professor =".$objProf->id_professor." AND id_projeto =".$id;
+					$del_prof = "DELETE FROM proj_prof WHERE id_professor =".$objProf->id_professor." AND id_projeto =".$id;
 					$conn->query($del_prof);
 					}
 					$objProf = $sel->fetch_object();
@@ -349,11 +345,11 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 								</div>
 								<div class="form-group">
 									<label>SEMESTRE DE INICIO<span class="ast">*</span></label><br>
-									<input type="radio" id="sem_ini" name="sem_ini" value="0">
+									<input type="radio" id="sem_ini1" name="sem_ini" value="0">
 									<label> Primeiro</label><br>
-									<input type="radio" id="sem_ini" name="sem_ini" value="1">
+									<input type="radio" id="sem_ini2" name="sem_ini" value="1">
 									<label> Segundo</label>
-								</div>								
+								</div>
 							</div>
 							<div class="col-2 vertical-line">
 								<div class="form-group">
@@ -367,11 +363,11 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 							<div class="col-2 vertical-line">
 								<div class="form-group">
 									<label>TIPO DO PROJETO<span class="ast">*</span></label><br>
-									<input type="radio" id="tipo_proj" name="tipo_proj" value="0"> <!-- Depois terminar com <?php if ($vetor->concluido == false) echo 'checked';?> value="0" -->
+									<input type="radio" id="tipo_proj1" name="tipo_proj" value="0"> <!-- Depois terminar com <?php if ($vetor->concluido == false) echo 'checked';?> value="0" -->
 									<label> Projeto pessoal</label><br>
-									<input type="radio" id="tipo_proj" name="tipo_proj" value="1">
+									<input type="radio" id="tipo_proj2" name="tipo_proj" value="1">
 									<label> Projeto de disciplina</label><br>
-									<input type="radio" id="tipo_proj" name="tipo_proj" value="2">
+									<input type="radio" id="tipo_proj3" name="tipo_proj" value="2">
 									<label> Projeto extensão</label>
 								</div>
 							</div>							

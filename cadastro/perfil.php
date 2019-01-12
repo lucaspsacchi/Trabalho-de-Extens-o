@@ -152,8 +152,9 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 				<form name="form" class="form-horizontal" action="#" method="post" enctype="multipart/form-data">
 					<div class="text-center">
 						<h2>Editar perfil</h2>
-						<p>Altere os campos abaixo para atualizar os dados do perfil</p>
 					</div>
+					<h6><span class="ast">* Campos obrigatórios</span></h6>
+					<hr>					
 					<div class="row">
 						<div class="col-7">
 							<div class="form-group">
@@ -161,7 +162,7 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 								<input type="text" class="form-control" id="usuario" name="usuario" maxlength="20" value="<?php echo $vetor->usuario; ?>" required placeholder="Alterar nome do usuário">
 							</div>
 						</div>
-						<div class="col-5 vertical-line">
+						<div class="col-5">
 							<div class="form-group">
 								<label for="usr">SENHA<span class="ast">*</span></label>
 								<input type="password" class="form-control" id="password" name="password" pattern=".{4,20}" value="password" placeholder="Digite uma nova senha">
@@ -173,11 +174,11 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 					<div class="row">
 						<div class="col-7">
 							<div class="form-group">
-								<label for="usr">NOME<span class="ast">*</span></label>
-								<input type="text" class="form-control" id="nome" name="nome" maxlength="50" value="<?php echo $vetor->nome; ?>" required placeholder="Insira o nome completo">
+								<label for="usr">NOME COMPLETO<span class="ast">*</span></label>
+								<input type="text" class="form-control" id="nome" name="nome" maxlength="150" value="<?php echo $vetor->nome; ?>" required placeholder="Insira o nome completo">
 							</div>
 						</div>
-						<div class="col-5 vertical-line">
+						<div class="col-5">
 							<div class="form-group">
 								<label for="usr">SITE PESSOAL</label>
 								<input type="text" class="form-control" id="site" name="site" maxlength="150" value="<?php echo $vetor->site; ?>" placeholder="Insira a url (opcional)">
@@ -189,7 +190,7 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 						<div class="col-7">
 							<div class="form-group">
 								<label for="comment">SOBRE<span class="ast">*</span></label>
-								<textarea type="text" name="descricao" class="form-control" rows="5" required maxlength="400" id="description" placeholder="Escreva um pouco sobre você e sua formação"><?php echo $vetor->descricao; ?></textarea>
+								<textarea type="text" name="descricao" class="form-control" rows="5" required maxlength="1000" id="description" placeholder="Escreva um pouco sobre você e sua formação"><?php echo $vetor->descricao; ?></textarea>
 							</div>
 						</div>
 						<div class="col-5 vertical-line">
@@ -205,10 +206,8 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 								</div>
 						</div>	
 					</div>
-					<h6><span class="ast">* Campos obrigatórios</span></h6>
-					<hr>
 					<div class="d-flex flex-row justify-content-end col-12">
-							<button class="btn btn-secondary" name="salvar_dados">Salvar</button>
+							<button class="btn btn-success" name="salvar_dados">Salvar</button>
 					</div>
 				</form>
 			</div>

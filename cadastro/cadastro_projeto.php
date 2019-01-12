@@ -72,16 +72,16 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 
 			//Inserção dos dados do projeto no banco de dados
 			if ($var_site == NULL && $var_alunos == NULL) {
-				$insertSQL = "INSERT INTO `interbccs_db`.`projeto` (`nome`, `foto`, `descricao`, `data_inicio`, `concluido`, `enable`) VALUES ('".$_POST['nome']."', '".$novoNome."', '".$_POST['descricao']."', '".$_POST['data']."', '".$_POST['andamento']."', '1');";
+				$insertSQL = "INSERT INTO projeto (nome, foto, descricao, data_inicio, concluido, enable, sem_ini, tipo_proj) VALUES ('".$_POST['nome']."', '".$novoNome."', '".$_POST['descricao']."', '".$_POST['data']."', '".$_POST['andamento']."', '1', '".$_POST['sem_ini']."', '".$_POST['tipo_proj']."');";
 			}
 			else if ($var_site == NULL) {
-				$insertSQL = "INSERT INTO `interbccs_db`.`projeto` (`nome`, `foto`, `descricao`, `alunos`, `data_inicio`, `concluido`, `enable`) VALUES ('".$_POST['nome']."', '".$novoNome."', '".$_POST['descricao']."', '".$var_alunos."', '".$_POST['data']."', '".$_POST['andamento']."', '1');";
+				$insertSQL = "INSERT INTO projeto (nome, foto, descricao, alunos, data_inicio, concluido, enable, sem_ini, tipo_proj) VALUES ('".$_POST['nome']."', '".$novoNome."', '".$_POST['descricao']."', '".$var_alunos."', '".$_POST['data']."', '".$_POST['andamento']."', '1', '".$_POST['sem_ini']."', '".$_POST['tipo_proj']."');";
 			}
 			else if ($var_alunos == NULL) {
-				$insertSQL = "INSERT INTO `interbccs_db`.`projeto` (`nome`, `foto`, `site_proj`, `descricao`, `data_inicio`, `concluido`, `enable`) VALUES ('".$_POST['nome']."', '".$novoNome."', '".$var_site."', '".$_POST['descricao']."', '".$_POST['data']."', '".$_POST['andamento']."', '1');";			
+				$insertSQL = "INSERT INTO projeto (nome, foto, site_proj, descricao, data_inicio, concluido, enable, sem_ini, tipo_proj) VALUES ('".$_POST['nome']."', '".$novoNome."', '".$var_site."', '".$_POST['descricao']."', '".$_POST['data']."', '".$_POST['andamento']."', '1', '".$_POST['sem_ini']."', '".$_POST['tipo_proj']."');";			
 			}
 			else {
-				$insertSQL = "INSERT INTO `interbccs_db`.`projeto` (`nome`, `foto`, `site_proj`, `descricao`, `alunos`, `data_inicio`, 		`concluido`, `enable`) VALUES ('".$_POST['nome']."', '".$novoNome."', '".$var_site."', '".$_POST['descricao']."', '".$var_alunos."', '".$_POST['data']."', '".$_POST['andamento']."', '1');";			
+				$insertSQL = "INSERT INTO projeto (nome, foto, site_proj, descricao, alunos, data_inicio, concluido, enable, sem_ini, tipo_proj) VALUES ('".$_POST['nome']."', '".$novoNome."', '".$var_site."', '".$_POST['descricao']."', '".$var_alunos."', '".$_POST['data']."', '".$_POST['andamento']."', '1', '".$_POST['sem_ini']."', '".$_POST['tipo_proj']."');";			
 			}
 			
 			if (mysqli_query($conn, $insertSQL) == TRUE) {
@@ -98,19 +98,19 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 			//Manipulação e inserção das áreas do projeto inserido
 			if (isset($_POST['checkarea'])) {
 				foreach ($_POST['checkarea'] as $key => $value) {
-					$insertArea = "INSERT INTO `interbccs_db`.`area_proj` (`id_area`, `id_projeto`) VALUE ('".$value."', '".$index."')";
+					$insertArea = "INSERT INTO area_proj (id_area, id_projeto) VALUE ('".$value."', '".$index."')";
 					mysqli_query($conn, $insertArea);
 				}
 			}
 			//Manipulação e inserção dos professores do projeto inserido
 			if (isset($_POST['checkprof'])) {
 				foreach ($_POST['checkprof'] as $key => $val) {
-					$insertProf = "INSERT INTO `interbccs_db`.`proj_prof` (`id_professor`, `id_projeto`) VALUE ('".$val."', '".$index."')";
+					$insertProf = "INSERT INTO proj_prof (id_professor, id_projeto) VALUE ('".$val."', '".$index."')";
 					mysqli_query($conn, $insertProf);
 				}
 			}
 			//Insere o professor que está cadastrando um projeto
-			$insertProf = "INSERT INTO `interbccs_db`.`proj_prof` (`id_professor`, `id_projeto`) VALUE ('".$_SESSION['idSave']."', '".$index."')";
+			$insertProf = "INSERT INTO proj_prof (id_professor, id_projeto) VALUE ('".$_SESSION['idSave']."', '".$index."')";
 			mysqli_query($conn, $insertProf);
 
 			//$_SESSION['mensagem'] = "Projeto cadastrado com sucesso!";
@@ -155,7 +155,7 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 						</div>
 						<br>
 						<h6><span class="ast">* Campos obrigatórios</span></h6>
-						<hr>						
+						<hr>
 						<div class="row">
 							<div class="col-7">
 								<div class="form-group">
@@ -223,9 +223,9 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 								</div>
 								<div class="form-group">
 									<label>SEMESTRE DE INICIO<span class="ast">*</span></label><br>
-									<input type="radio" id="sem_ini" name="sem_ini" value="0" checked>
+									<input type="radio" id="sem_ini1" name="sem_ini" value="0" checked>
 									<label> Primeiro</label><br>
-									<input type="radio" id="sem_ini" name="sem_ini" value="1">
+									<input type="radio" id="sem_ini2" name="sem_ini" value="1">
 									<label> Segundo</label>
 								</div>
 							</div>
@@ -241,11 +241,11 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 							<div class="col-2 vertical-line">
 								<div class="form-group">
 									<label>TIPO DO PROJETO<span class="ast">*</span></label><br>
-									<input type="radio" id="tipo_proj" name="tipo_proj" value="0" checked>
+									<input type="radio" id="tipo_proj1" name="tipo_proj" value="0" checked>
 									<label> Projeto pessoal</label><br>
-									<input type="radio" id="concluido" name="tipo_proj" value="1">
+									<input type="radio" id="tipo_proj2" name="tipo_proj" value="1">
 									<label> Projeto de disciplina</label><br>
-									<input type="radio" id="tipo_proj" name="tipo_proj" value="2">
+									<input type="radio" id="tipo_proj3" name="tipo_proj" value="2">
 									<label> Projeto extensão</label>									
 								</div>
 							</div>

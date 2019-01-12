@@ -52,6 +52,11 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 
 		<link rel="stylesheet" href="../css/cadStyle.css">
 		<!-- <link rel="stylesheet" href="../css/homeCadStyle.css"> -->
+
+		<!-- Sweet Alert 2 -->
+		<script src="../sweetalert2-master/dist/sweetalert2.min.js"></script>
+		<link rel="stylesheet" href="../sweetalert2-master/dist/sweetalert2.min.css">
+
     </head>
     <body>
 
@@ -76,7 +81,7 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 							</button>
 							<div class="dropdown-menu">
 								<a class="dropdown-item" href="cadastro_projeto.php">Projeto</a>
-    							<a class="dropdown-item" href="#">Professor</a>
+    							<a class="dropdown-item" href="cadastro_professor.php">Professor</a>
 							</div>
 						</div>						
 					</center>
@@ -101,3 +106,27 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 
     </body>
 </html>
+
+<!-- Sweet Alert 2 -->
+<?php
+if (isset($_SESSION['msg_conf'])) {
+?>
+<script>
+$(document).ready(function() {
+	Swal({
+		type: 'success',
+		title: '<?php echo $_SESSION['msg_conf'];?>',
+		html: 'Usuário: <?php echo $_SESSION['usu_conf'];?><br>Senha: <?php echo $_SESSION['sen_conf'];?>',
+		allowOutsideClick: false,
+		showConfirmButton: true,
+		confirmButtonText: 'OK',
+	})
+})
+</script>
+
+<?php
+unset($_SESSION['msg_conf']);
+unset($_SESSION['usu_conf']);
+unset($_SESSION['sen_conf']);
+}
+?>
