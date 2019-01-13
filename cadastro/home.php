@@ -108,6 +108,8 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 </html>
 
 <!-- Sweet Alert 2 -->
+
+<!-- Cadastro de professor -->
 <?php
 if (isset($_SESSION['msg_conf'])) {
 ?>
@@ -128,5 +130,23 @@ $(document).ready(function() {
 unset($_SESSION['msg_conf']);
 unset($_SESSION['usu_conf']);
 unset($_SESSION['sen_conf']);
+}
+?>
+
+<!-- Cadastro de projeto -->
+<?php
+if (isset($_SESSION['msg_proj'])) {
+?>
+<script>
+$(document).ready(function() {
+	Swal({
+		type: 'success',
+		title: '<?php echo $_SESSION['msg_proj'];?>',
+	})
+})
+</script>
+
+<?php
+unset($_SESSION['msg_proj']);
 }
 ?>

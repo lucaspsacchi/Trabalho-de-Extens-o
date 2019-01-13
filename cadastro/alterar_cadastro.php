@@ -8,7 +8,6 @@ session_start();
 if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
     header("Location: ../cadastro/login.php?erro_login=1");
 }
-
 	$id = $_GET['id'];
 
 	//Realiza uma busca no banco de dados para listar os projetos de um professor em específico
@@ -27,7 +26,7 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 
 		if (mysqli_query($conn, $upd) == TRUE) {
 			
-			$_SESSION['mensagem'] = "Projeto removido com sucesso!";
+			$_SESSION['msg_proj'] = "Projeto removido com sucesso!";
 			header('Location: ./home.php');
 		}
 		else {
@@ -212,7 +211,7 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 					$objProf = $sel->fetch_object();
 				}
 
-			$_SESSION['mensagem'] = "Atualização feita com sucesso!";
+			$_SESSION['msg_proj'] = "Projeto alterado com sucesso!";
 			header('Location: ./home.php');
 	}
 
@@ -234,6 +233,10 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 		<link rel="stylesheet" href="../css/cadStyle.css">
+
+		<!-- Sweet Alert 2 -->
+		<script src="../sweetalert2-master/dist/sweetalert2.min.js"></script>
+		<link rel="stylesheet" href="../sweetalert2-master/dist/sweetalert2.min.css">		
     </head>
     <body>
 
@@ -374,13 +377,12 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 							<div class="col-5 vertical-line">
 								<center>
 									<div class="form-group">
-										<img id="photo" src="../Imagens/<?php echo $vetor->foto;?>" class="img-rounded" width="280" height="210">
-										<br>
-										<label for="comment">FOTO DO PROJETO<span class="ast">*</span> </label>
+										<label for="comment">FOTO DO PROJETO<span class="ast">*</span> </label><br>								
+										<img id="photo" src="../Imagens/<?php echo $vetor->foto;?>" class="img-rounded" width="280" height="210" style="margin-bottom: 10px;">
 										<input type="file" name="file" id="file">
-                    <div class="form-group">
-                        <input type="hidden" id="photo_change" name="photo_change">
-                    </div>										
+										<div class="form-group">
+											<input type="hidden" id="photo_change" name="photo_change">
+										</div>										
 									</div>
 								</center>
 							</div>
@@ -395,7 +397,7 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 							</div>
 						</div>				
 						<div class="d-flex flex-row justify-content-between col-12">
-							<button class="btn btn-danger" name="remover_dados">Remover</button>
+							<button class="btn btn-danger" id="btn-submit" name="remover_dados">Remover</button>
 							<div class="row">
 								<a class="btn btn-secondary" href="./home.php" name="cancelar_dados">Cancelar</a>
 								<div class="" style="border-left: 1px solid #5A6268; margin-left: 15px; margin-right: 15px;"></div>
@@ -480,3 +482,27 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 			);			
 		</script>
 </html>
+
+<!-- 
+<script>
+$('#btn-submit').on('submit',function(e){
+    e.preventDefault();
+    var form = $(this).parents('form');
+    swal({
+        title: "Are you sure?",
+        text: "You will not be able to recover this imaginary file!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Yes, delete it!",
+        closeOnConfirm: true
+    }, function(isConfirm){
+		if (isConfirm.value == true) {
+			return true;
+		}
+		else {
+			return false;
+		}
+    });
+});
+</script> -->

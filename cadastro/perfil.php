@@ -51,8 +51,8 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
     }
 		
 		if (!isset($novoNome) || $novoNome == "") {
-        $novoNome = $vetor->foto;
-    }
+			$novoNome = $vetor->foto;
+		}
 		
 		//Alteração de senha
 		$flagPass = 0;
@@ -71,25 +71,25 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 		}
 		if ($flagPass) {
 			if ($flagSite) {
-				$scriptSQL = "UPDATE `interbccs`.`professor`
-				SET `nome` ='".$_POST['nome']."', `usuario` ='".$_POST['usuario']."', `descricao` ='".$_POST['descricao']."', `senha` ='".$senha."', `site` = '".$_POST['site']."', `foto` = '".$novoNome."'
+				$scriptSQL = "UPDATE professor
+				SET nome ='".$_POST['nome']."', usuario ='".$_POST['usuario']."', descricao ='".$_POST['descricao']."', senha ='".$senha."', site = '".$_POST['site']."', foto = '".$novoNome."', sexo ='".$_POST['sexo']."'
 				WHERE id_professor =".$id.";";				
 			}
 			else {
-				$scriptSQL = "UPDATE `interbccs`.`professor`
-				SET `nome` ='".$_POST['nome']."', `usuario` ='".$_POST['usuario']."', `descricao` ='".$_POST['descricao']."', `senha` ='".$senha."', `foto` = '".$novoNome."'
+				$scriptSQL = "UPDATE professor
+				SET nome ='".$_POST['nome']."', usuario ='".$_POST['usuario']."', descricao ='".$_POST['descricao']."', senha ='".$senha."', foto = '".$novoNome."', sexo ='".$_POST['sexo']."'
 				WHERE id_professor =".$id.";";
 			}
 		}
 		else {
 			if ($flagSite) {
-				$scriptSQL = "UPDATE `interbccs`.`professor`
-				SET `nome` ='".$_POST['nome']."', `usuario` ='".$_POST['usuario']."', `descricao` ='".$_POST['descricao']."', `site` = '".$_POST['site']."', `foto` = '".$novoNome."'
+				$scriptSQL = "UPDATE professor
+				SET nome ='".$_POST['nome']."', usuario ='".$_POST['usuario']."', descricao ='".$_POST['descricao']."', site = '".$_POST['site']."', foto = '".$novoNome."', sexo ='".$_POST['sexo']."'
 				WHERE id_professor =".$id.";";			
 			}
 			else {
-				$scriptSQL = "UPDATE `interbccs`.`professor`
-				SET `nome` ='".$_POST['nome']."', `usuario` ='".$_POST['usuario']."', `descricao` ='".$_POST['descricao']."', `foto` = '".$novoNome."'
+				$scriptSQL = "UPDATE professor
+				SET nome ='".$_POST['nome']."', usuario ='".$_POST['usuario']."', descricao ='".$_POST['descricao']."', foto = '".$novoNome."', sexo ='".$_POST['sexo']."'
 				WHERE id_professor =".$id.";";
 			}	
 		}
@@ -103,7 +103,7 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 			$result = $conn->query($scriptSQL);
 			$vetor = $result->fetch_object();
 			
-			$_SESSION['mensagem'] = "Perfil atualizado com sucesso!";
+			$_SESSION['msg_proj'] = "Dados alterados com sucesso!";
 			header('Location: ./home.php');
 		}
 		else {
@@ -187,26 +187,38 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 					</div>
 					<hr>
 					<div class="row">
-						<div class="col-7">
+						<div class="col-3">
 							<div class="form-group">
-								<label for="comment">SOBRE<span class="ast">*</span></label>
-								<textarea type="text" name="descricao" class="form-control" rows="5" required maxlength="1000" id="description" placeholder="Escreva um pouco sobre você e sua formação"><?php echo $vetor->descricao; ?></textarea>
-							</div>
-						</div>
-						<div class="col-5 vertical-line">
-	
-								<div class="form-group">
-									<img id="photo" src="../Imagens/<?php echo $vetor->foto;?>" class="img-rounded" width="200" height="210">
-									<br>
-									<label for="comment">ALTERAR FOTO DE PERFIL<span class="ast">*</span> </label>
+								<center>
+									<label for="comment">ALTERAR FOTO DE PERFIL<span class="ast">*</span> </label><br>
+									<img id="photo" src="../Imagens/<?php echo $vetor->foto;?>" class="img-rounded" width="200" height="210" style="margin-bottom: 10px;">
 									<input type="file" name="file" id="file" value="0">
 									<div class="form-group">
 											<input type="hidden" id="photo_change" name="photo_change">
 									</div>
-								</div>
-						</div>	
+								</center>
+							</div>
+						</div>
+						<div class="col-2 vertical-line">
+							<div class="form-group">
+								<label>SEXO<span class="ast">*</span></label><br>
+								<input type="radio" id="masc" name="sexo" value="0" <?php if ($vetor->sexo == '0') echo 'checked'; ?>>
+								<label> Masculino</label><br>
+								<input type="radio" id="femi" name="sexo" value="1" <?php if ($vetor->sexo == '1') echo 'checked'; ?>>
+								<label> Feminino</label>					
+							</div>
+						</div>
+						<div class="col-7 vertical-line">
+							<div class="form-group">
+								<label for="comment">SOBRE<span class="ast">*</span></label>
+								<textarea type="text" name="descricao" class="form-control" rows="8" required maxlength="1000" id="description" placeholder="Escreva um pouco sobre você e sua formação"><?php echo $vetor->descricao; ?></textarea>
+							</div>
+						</div>						
 					</div>
+					<br>
 					<div class="d-flex flex-row justify-content-end col-12">
+							<a class="btn btn-secondary" href="./home.php" name="cancelar_dados">Cancelar</a>
+							<div class="" style="border-left: 1px solid #5A6268; margin-left: 15px; margin-right: 15px;"></div>
 							<button class="btn btn-success" name="salvar_dados">Salvar</button>
 					</div>
 				</form>

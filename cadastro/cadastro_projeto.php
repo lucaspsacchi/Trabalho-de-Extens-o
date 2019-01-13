@@ -113,8 +113,8 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 			$insertProf = "INSERT INTO proj_prof (id_professor, id_projeto) VALUE ('".$_SESSION['idSave']."', '".$index."')";
 			mysqli_query($conn, $insertProf);
 
-			//$_SESSION['mensagem'] = "Projeto cadastrado com sucesso!";
-			header('Location: ./home.php');			
+			$_SESSION['msg_proj'] = "Projeto cadastrado com sucesso!";
+			header('Location: ./home.php');
 		}
 
 	}
@@ -252,9 +252,8 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 							<div class="col-5 vertical-line">
 								<center>
 									<div class="form-group">
-										<img id="photo" src="../Imagens/imgindisponivel.jpg" class="img-rounded" width="330" height="210">
-										<br>
-										<label for="comment">FOTO DO PROJETO<span class="ast">*</span> </label>
+										<label for="comment">FOTO DO PROJETO<span class="ast">*</span> </label><br>
+										<img id="photo" src="../Imagens/imgindisponivel.jpg" class="img-rounded" width="330" height="210" style="margin-bottom: 10px;">
 										<input type="file" name="file" id="file" required/>
 									</div>
 								</center>

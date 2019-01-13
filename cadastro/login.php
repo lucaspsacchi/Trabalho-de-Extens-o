@@ -1,5 +1,7 @@
 <?php
 $erro_login = 0;
+session_start();
+
 if (isset($_POST['inputUser'])) {
 
     include('../connection/connection.php');
@@ -53,16 +55,15 @@ if (isset($_POST['inputUser'])) {
         <link rel="stylesheet" href="../js/bootstrap.min.js">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+
+
+		<!-- Sweet Alert 2 -->
+		<script src="../sweetalert2-master/dist/sweetalert2.min.js"></script>
+		<link rel="stylesheet" href="../sweetalert2-master/dist/sweetalert2.min.css">
     </head>
     <body>
-
-			<!-- <nav class="navbar navbar-expand-sm my-nav">
-					<a class="navbar-brand">
-							<img src="../Imagens/Inter%20BCCS%20Logo%20Fundo%20Branco.png" width="5%" height="5%" alt="logo">
-					</a>
-					<h4>INTERBCCS</h4>
-			</nav> -->
-
 
         <!-- "Margin top" -->
         <br><br>
@@ -138,6 +139,18 @@ if (isset($_POST['inputUser'])) {
 
     </body>
 </html>
+
+<!-- Redefinir senha -->
+<?php
+if (isset($_SESSION['msg_conf'])) {
+    ?><script>
+	$(document).ready(function() {
+		swal({title:'<?php echo $_SESSION['msg_conf'];?>',
+			type: 'success'});
+	})</script><?php
+    unset($_SESSION['msg_conf']);
+}
+?>
 
 <script>
     // Trigger para alterar o tab de "Esqueceu a sua senha?" para Senha

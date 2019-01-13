@@ -1,5 +1,7 @@
 <?php
 $erro_login = 0;
+session_start();
+
 if (isset($_POST['inputUser'])) {
 
     include('../connection/connection.php');
@@ -22,7 +24,9 @@ if (isset($_POST['inputUser'])) {
                         WHERE id_professor = '".$id."'";
 
         $result = $conn->query($script);
-        header('Location: login.php');
+
+        $_SESSION['msg_conf'] = 'Senha redefinida com sucesso!';
+        header('Location: ./login.php');
     }
     else { // Se não
         $erro_login = 1;
@@ -45,10 +49,10 @@ if (isset($_POST['inputUser'])) {
         <link rel="stylesheet" type="text/css" href="../css/loginStyle.css">
         <link rel="stylesheet" href="../js/bootstrap.min.js">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 
-        
-        <!-- Chamada da função js para validar os campos da senha -->
-        <script type="text/javascript" src="../js/senha.js"></script>
+        <script src="../js/senha.js"></script>
+
     </head>
     <body>
 
@@ -65,12 +69,12 @@ if (isset($_POST['inputUser'])) {
                     // Mensagem de erro caso o usuário informe usuário ou senha incorreto
                     if ($erro_login == 1) {
                         echo '<div class="form-group row justify-content-center"><div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"><div class="alert alert-danger">
-                            <strong>Usuário e/ou senha incorretos</strong><br>
+                            <strong>Usuário incorreto</strong><br>
                             Digite novamente os seus dados.</div></div></div>';
                     }
                     ?>
                 </div>
-                <form id="cadastro" class="custom-form" action="esqueceu.php" method="POST">
+                <form id="formEsq" class="custom-form" action="esqueceu.php" method="POST">
                     <div class="d-flex justify-content-center">
                         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                             <div class="card shadow"> <!-- Shadow na borda do card -->
@@ -108,7 +112,7 @@ if (isset($_POST['inputUser'])) {
                                         </div>
                                         <div class="row d-flex">
                                             <div class="custom-input">
-                                                <input type="password" class="form-control" id="inputConfPass" name="inputConfPass" data-toggle="popover" placeholder="4 a 20 caracteres" pattern=".{4,20}" required>
+                                                <input type="password" class="form-control"  placeholder="4 a 20 caracteres" id="inputConfPass" name="inputConfPass" pattern=".{4,20}" required>
                                             </div>
                                         </div>
                                     </div>
@@ -116,7 +120,7 @@ if (isset($_POST['inputUser'])) {
                                     <div class="form-group">
                                         <div class="row d-flex">
                                             <div class="btn-custom">
-                                                <button type="submit" class="btn btn-success btn-block">Entrar</button>
+                                                <button type="submit" class="btn btn-success btn-block">Confirmar</button>
                                             </div>
                                         </div>
                                     </div>
