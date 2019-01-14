@@ -87,24 +87,24 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 		if ($var_site) {
 			if ($var_alunos) {
 				$insertSQL = "UPDATE projeto
-				SET nome = '".$_POST['nome']."', descricao = '".$_POST['descricao']."', data_inicio = '".$_POST['data']."', concluido = '".$_POST['andamento']."', site_proj = '".$_POST['site']."', alunos = '".$_POST['alunos']."', foto = '".$novoNome."'
+				SET nome = '".$_POST['nome']."', descricao = '".$_POST['descricao']."', data_inicio = '".$_POST['data']."', concluido = '".$_POST['andamento']."', site_proj = '".$_POST['site']."', alunos = '".$_POST['alunos']."', foto = '".$novoNome."', sexo = '".$_POST['sexo']."'
 				WHERE id_projeto = ".$id.";";				
 			}
 			else {
 				$insertSQL = "UPDATE projeto
-				SET nome = '".$_POST['nome']."', descricao = '".$_POST['descricao']."', data_inicio = '".$_POST['data']."', concluido = '".$_POST['andamento']."', site_proj = '".$_POST['site']."', foto = '".$novoNome."'
+				SET nome = '".$_POST['nome']."', descricao = '".$_POST['descricao']."', data_inicio = '".$_POST['data']."', concluido = '".$_POST['andamento']."', site_proj = '".$_POST['site']."', foto = '".$novoNome."', sexo = '".$_POST['sexo']."'
 				WHERE id_projeto = ".$id.";";					
 			}
 		}
 		else {
 			if ($var_alunos) {
 				$insertSQL = "UPDATE projeto
-				SET nome = '".$_POST['nome']."', descricao = '".$_POST['descricao']."', data_inicio = '".$_POST['data']."', concluido = '".$_POST['andamento']."', alunos = '".$_POST['alunos']."', foto = '".$novoNome."'
+				SET nome = '".$_POST['nome']."', descricao = '".$_POST['descricao']."', data_inicio = '".$_POST['data']."', concluido = '".$_POST['andamento']."', alunos = '".$_POST['alunos']."', foto = '".$novoNome."', sexo = '".$_POST['sexo']."'
 				WHERE id_projeto = ".$id.";";						
 			}
 			else {
 				$insertSQL = "UPDATE projeto
-				SET nome = '".$_POST['nome']."', descricao = '".$_POST['descricao']."', data_inicio = '".$_POST['data']."', concluido = '".$_POST['andamento']."', foto = '".$novoNome."'
+				SET nome = '".$_POST['nome']."', descricao = '".$_POST['descricao']."', data_inicio = '".$_POST['data']."', concluido = '".$_POST['andamento']."', foto = '".$novoNome."', sexo = '".$_POST['sexo']."'
 				WHERE id_projeto = ".$id.";";					
 			}		
 		}

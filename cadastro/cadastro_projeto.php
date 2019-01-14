@@ -135,7 +135,11 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 		<link rel="stylesheet" href="../css/navbarfooter.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-		<link rel="stylesheet" href="../css/cadStyle.css">		
+		<link rel="stylesheet" href="../css/cadStyle.css">
+		
+		<!-- Cropper -->
+		<!-- <link  href="../cropperjs-master/dist/cropper.css" rel="stylesheet">
+		<script src="../cropperjs-master/dist/cropper.js"></script> -->
     </head>
     <body>
 
