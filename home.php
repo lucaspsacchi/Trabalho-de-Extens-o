@@ -3,10 +3,10 @@
 
 	//Realiza uma busca no banco de dados em ordem decrescente pelo id do projeto
 	$scriptSQL = "SELECT id_projeto, foto, nome, descricao
-								FROM projeto
-								WHERE enable = 1
-								ORDER BY id_projeto DESC
-								LIMIT 4";
+				FROM projeto
+				WHERE enable = 1
+				ORDER BY id_projeto DESC
+				LIMIT 4";
 
 	$result = $conn->query($scriptSQL);
 ?>
@@ -43,7 +43,7 @@
 							<!-- Título, descrição e botão -->
 							<div class="card-block-home">
 								<h4 class="card-text h4-home"><strong><?php echo $vetor->nome;?></strong></h4>
-								<p class="card-text p-home"><?php echo $vetor->descricao;?></p>
+								<p class="card-text p-home p-truncated"><?php echo $vetor->descricao;?></p>
 								<!--<button class="btn btn-secondary">Saiba mais</button>-->
 								<form method="POST" action="./projeto.php">
 									<input type="hidden" name="id_proj" value="<?php echo $vetor->id_projeto;?>"> <!--Id do projeto é passado pelo método post -->
@@ -74,3 +74,6 @@
 
 </body>
 </html>
+
+<!-- Import do js para limitar os caracteres da descrição -->
+<script type="text/javascript" src="./js/truncated-proj.js"></script>

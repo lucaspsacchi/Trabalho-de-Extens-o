@@ -56,7 +56,7 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 		
 		//Alteração de senha
 		$flagPass = 0;
-		if (isset($_POST['password']) && $_POST['password'] != "" && $_POST['password'] != " ") {
+		if (isset($_POST['password']) && $_POST['password'] != "" && $_POST['password'] != " " && $_POST['password'] != "password") {
 			$senha = MD5($_POST['password']);
 
 			//Verifica se a senha foi alterada

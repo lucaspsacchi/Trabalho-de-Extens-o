@@ -2,10 +2,10 @@
   include('./connection/connection.php');
 
 	//Realiza uma busca no banco de dados para listar os professores
-	$scriptSQL = "SELECT id_professor, nome, descricao, foto
-								FROM professor
-								WHERE enable = 1
-								ORDER BY nome ASC";
+	$scriptSQL = "SELECT DISTINCT id_professor, nome, descricao, foto
+					FROM professor NATURAL JOIN proj_prof
+					WHERE enable = 1
+					ORDER BY nome ASC";
 
 	$result = $conn->query($scriptSQL);
 ?>
@@ -42,7 +42,7 @@
 						<div class="col-xl-9 col-lg-8">
 							<div class="card-block-prof">
 								<h4 class="card-text"><strong><?php echo $vetor->nome;?></strong></h4>
-								<p id="over" class="card-text p-prof"><?php echo $vetor->descricao;?></p>
+								<p id="over" class="card-text p-prof p-truncated"><?php echo $vetor->descricao;?></p>
 								<form class="btn-prof" method="post" action="./busca.php">
 									<input type="hidden" name="id_prof" value="<?php echo $vetor->id_professor;?>">
 									<button class="btn btn-secondary">Ver projetos</button>
@@ -65,23 +65,5 @@
 </body>
 </html>
 
-<script>
-var x = document.getElementsByTagName("p");
-
-// Retirado do 
-function truncateText(element, maxLength) {
-	var truncated = element.innerText; // Pega o texto
-
-	if (truncated.length > maxLength) { // Se é maior que o maxLength passado pelo parâmetro
-		truncated = truncated.substr(0,maxLength); // Copia apenas a parte menor
-		// Procura o último espaço, copia apenas a parte anterior a esse index e concatenando com '...'
-		truncated = truncated.substr(0, truncated.lastIndexOf(" ")) + '...';
-	}
-return truncated;
-}
-
-for (i = 0; i < x.length; i++) {
-	x[i].innerHTML = truncateText(x[i], 400);
-}
-
-</script>
+<!-- Import do js para limitar os caracteres da descrição -->
+<script type="text/javascript" src="./js/truncated-prof.js"></script>

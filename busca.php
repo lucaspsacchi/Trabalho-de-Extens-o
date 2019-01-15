@@ -7,8 +7,9 @@
 	//Home
 	if ($_POST['todos_proj'] == 1) {
 		$scriptSQL = "SELECT id_projeto, nome, descricao, foto, enable
-									FROM projeto
-									ORDER BY id_projeto DESC";
+						FROM projeto
+						WHERE enable = 1
+						ORDER BY id_projeto DESC";
 
 		$result = $conn->query($scriptSQL);
 		$page = 1;
@@ -16,9 +17,9 @@
 	//Professor
 	else if ($_POST['id_prof'] != NULL) {
 		$scriptSQL = "SELECT id_projeto, nome, descricao, foto, enable
-									FROM projeto NATURAL JOIN proj_prof
-									WHERE proj_prof.id_professor =".$_POST['id_prof']."
-									ORDER BY id_projeto DESC";
+						FROM projeto NATURAL JOIN proj_prof
+						WHERE proj_prof.id_professor =".$_POST['id_prof']."
+						ORDER BY id_projeto DESC";
 
 		$result = $conn->query($scriptSQL);
 
@@ -34,9 +35,9 @@
 	//Área
 	else if ($_POST['id_area'] != NULL) {
 		$scriptSQL = "SELECT id_projeto, nome, descricao, foto, enable
-									FROM projeto NATURAL JOIN area_proj
-									WHERE area_proj.id_area =".$_POST['id_area']."
-									ORDER BY id_projeto DESC";
+						FROM projeto NATURAL JOIN area_proj
+						WHERE area_proj.id_area =".$_POST['id_area']."
+						ORDER BY id_projeto DESC";
 
 		$result = $conn->query($scriptSQL);
 		$page = 3;
@@ -44,9 +45,9 @@
 	//Ano
 	else if ($_POST['ano'] != NULL) {
 		$scriptSQL = "SELECT id_projeto, nome, descricao, foto, enable
-									FROM projeto
-									WHERE data_inicio =".$_POST['ano']."
-									ORDER BY id_projeto DESC";
+						FROM projeto
+						WHERE data_inicio =".$_POST['ano']."
+						ORDER BY id_projeto DESC";
 
 		$result = $conn->query($scriptSQL);
 		$page = 4;
@@ -56,9 +57,9 @@
 		$string = "'%".$_POST['search']."%'";
 
 		$scriptSQL = "SELECT projeto.id_projeto, projeto.nome, projeto.descricao, projeto.foto, projeto.enable
-									FROM area, area_proj, projeto, proj_prof, professor
-									WHERE area.id_area = area_proj.id_area AND projeto.id_projeto = area_proj.id_projeto AND projeto.id_projeto = proj_prof.id_projeto AND professor.id_professor = proj_prof.id_professor AND area.nome LIKE ".$string." OR projeto.nome LIKE ".$string." OR projeto.data_inicio LIKE ".$string."
-									GROUP BY(projeto.id_projeto)";
+						FROM area, area_proj, projeto, proj_prof, professor
+						WHERE area.id_area = area_proj.id_area AND projeto.id_projeto = area_proj.id_projeto AND projeto.id_projeto = proj_prof.id_projeto AND professor.id_professor = proj_prof.id_professor AND area.nome LIKE ".$string." OR projeto.nome LIKE ".$string." OR projeto.data_inicio LIKE ".$string."
+						GROUP BY(projeto.id_projeto)";
 
 		$result = $conn->query($scriptSQL);
 		$rows = $result->num_rows;
@@ -130,11 +131,9 @@
 			</div>
 		</div>
 		<?php
+		echo '<br><hr><br>';
 		}
 		?>
-		<br>
-		<hr>
-		<br>
 
 		<!-- Exibe os projetos da busca -->
 		<?php
@@ -155,7 +154,7 @@
 						<div class="col-xl-8 col-lg-7">
 							<div class="card-block-home">
 								<h4 class="card-text h4-home"><strong><?php echo $vetor->nome;?></strong></h4>
-								<p class="card-text p-home"><?php echo $vetor->descricao;?></p>
+								<p class="card-text p-home p-truncated"><?php echo $vetor->descricao;?></p>
 								<form method="POST" action="./projeto.php">
 									<input type="hidden" name="id_proj" value="<?php echo $vetor->id_projeto;?>"> <!-- Id do proheto é passado pelo método post -->
 									<input type="submit" class="btn btn-secondary btn-home" name="botao" value="Saiba mais">
@@ -190,3 +189,6 @@
 
 </body>
 </html>
+
+<!-- Import do js para limitar os caracteres da descrição -->
+<script type="text/javascript" src="./js/truncated-proj.js"></script>

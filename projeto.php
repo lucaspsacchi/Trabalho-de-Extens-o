@@ -5,24 +5,24 @@
 	if (isset($_POST['id_proj'])) {
 	//Realiza uma busca no banco de dados para os projetos
 	$scriptSQL = "SELECT *
-								FROM projeto
-								WHERE id_projeto =".$_POST['id_proj'];
+					FROM projeto
+					WHERE id_projeto =".$_POST['id_proj'];
 
 	$result = $conn->query($scriptSQL);
 	$vetor = $result->fetch_object();
 	
 	//Realiza uma busca no banco de dados para os professores
 	$scriptProf = "SELECT professor.nome, professor.sexo, professor.site
-								FROM professor NATURAL JOIN proj_prof
-								WHERE proj_prof.id_projeto =".$_POST['id_proj'];
+					FROM professor NATURAL JOIN proj_prof
+					WHERE proj_prof.id_projeto =".$_POST['id_proj'];
 		
 	$resultProf = $conn->query($scriptProf);
 	$profnum = $resultProf->num_rows;
 	//Realiza uma busca no banco de dados para as áreas
 	$scriptArea = "SELECT area.nome
-								FROM area NATURAL JOIN area_proj
-								WHERE area_proj.id_projeto =".$_POST['id_proj']."
-								ORDER BY area.nome asc";
+					FROM area NATURAL JOIN area_proj
+					WHERE area_proj.id_projeto =".$_POST['id_proj']."
+					ORDER BY area.nome asc";
 		
 	$resultArea = $conn->query($scriptArea);
 	$areanum = $resultArea->num_rows;
@@ -66,7 +66,7 @@ else {
 							<h3 class="card-text"><strong><?php echo $vetor->nome;?></strong></h3>
 						</div>
 					</div>
-				</div>				
+				</div>
 				<div class="bloco">
 					<div class="flex-row d-flex justify-content-start">
 						<div class="card-block-proj">
@@ -80,7 +80,7 @@ else {
 				$str = $vetor->site_proj;
 				?>
 				<div class="bloco">
-					<div class="flex-row d-flex justify-content-start">
+					<div class="label-align">
 						<?php
 							if (substr($str, 0, 4) == "http") {
 							?>
@@ -101,7 +101,27 @@ else {
 					}
 				?>
 				<div class="bloco">
-					<div class="flex-row d-flex justify-content-start">
+					<div class="label-align">
+						<label>
+							<strong>
+								Tipo do projeto:
+							</strong>
+							<?php
+								if ($vetor->tipo_proj == 0) {
+									echo 'Pessoal';
+								}
+								else if ($vetor->tipo_proj == 1){
+									echo 'Disciplina';
+								}
+								else {
+									echo 'Extensão';
+								}
+							?>
+						</label>
+					</div>
+				</div>				
+				<div class="bloco">
+					<div class="label-align">
 						<?php
 							if ($profnum > 1) {
 								echo '<label><strong>Docentes:&nbsp;</strong></label>';
@@ -111,19 +131,19 @@ else {
 							}
 			
 							while ($prof = $resultProf->fetch_object()) {
-								if ($prof->sexo == 'M') {
+								if ($prof->sexo == 0) {
 									if ($prof->site != NULL) {
 										// Verifica se tem http no começo da url
 										if (strncmp('http', $prof->site, 4) == 0) {
-											echo "<a href='<?php echo $prof->site;?>' target='_blank'>Prof. Dr. <?php echo $prof->nome;?></a>";
+											echo "<a href='$prof->site' target='_blank'>Prof. Dr. $prof->nome</a>";
 										}
 										else {
-											echo "<a href='http://<?php echo $prof->site;?>' target='_blank'>Prof. Dr. <?php echo $prof->nome;?></a>";
+											echo "<a href='http://$prof->site' target='_blank'>Prof. Dr. $prof->nome</a>";
 										}
 									}
 									else {
 										?>
-											<label>Prof. Dr. <?php echo $prof->nome;?></label>
+											<label id="label-prof">Prof. Dr. <?php echo $prof->nome;?></label>
 										<?php											
 									}		
 								}
@@ -139,7 +159,7 @@ else {
 									}
 									else {
 										?>
-											<label>Profa. Dra. <?php echo $prof->nome;?></label>
+											<label id="label-prof">Profa. Dra. <?php echo $prof->nome;?></label>
 										<?php											
 									}
 								}
@@ -171,7 +191,10 @@ else {
 				<div class="bloco">
 					<div class="flex-row d-flex justify-content-start">
 						<label><strong>Ano do início:&nbsp;</strong></label>
-						<?php echo $vetor->data_inicio;?>
+						<?php
+						$aux = $vetor->sem_ini + 1; // No bd foi armazenado 0 para primeiro e 1 para segundo
+						echo $vetor->data_inicio . '/' . $aux; // Concatena ano, \ e semestre de início
+						?>
 						<?php
 						if ($vetor->concluido) {
 							echo "(Concluído)";
@@ -183,7 +206,7 @@ else {
 					</div>
 				</div>
 				<div class="bloco">
-					<div class="flex-row d-flex justify-content-start">
+					<div class="label-align">
 						<?php
 							if ($areanum > 1) {
 								echo '<label><strong>Áreas:&nbsp;</strong></label>';

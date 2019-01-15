@@ -14,7 +14,6 @@ if (isset($_SESSION['error'])) {
     unset($_SESSION['error']);
 }
 
-
 if (isset($_POST['salvar_dados'])) {
 
     if (!isset($_POST['sexo'])) {
@@ -32,7 +31,7 @@ if (isset($_POST['salvar_dados'])) {
     $senha = 'bccs' . strtolower($split[0]) . '18';
 
     // Insert para o novo professor
-    $script = "INSERT INTO professor (nome, usuario, senha, foto, sexo) value ('".$_POST['nome']."', '".$usuario."', '".$senha."', 'perfil.png', '".$_POST['sexo']."')";
+    $script = "INSERT INTO professor (nome, usuario, senha, foto, sexo, enable) value ('".$_POST['nome']."', '".$usuario."', '".MD5($senha)."', 'perfil.png', '".$_POST['sexo']."', 1)";
 
     $result = $conn->query($script);
 

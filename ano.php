@@ -3,10 +3,10 @@
 
 	//Realiza uma busca no banco de dados para listar os anos em ordem decrescente e a quantidade de projetos do mesmo ano
 	$scriptSQL = "SELECT data_inicio, count(data_inicio) as num
-								FROM projeto
-								WHERE enable = 1
-								GROUP BY data_inicio
-								ORDER BY data_inicio DESC";
+				FROM projeto
+				WHERE enable = 1
+				GROUP BY data_inicio
+				ORDER BY data_inicio DESC";
 
 	$result = $conn->query($scriptSQL);
 ?>

@@ -20,22 +20,21 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 
 
 	if (isset($_POST['remover_dados'])) {
-		$upd = "UPDATE projeto
-		SET	enable = '0'
-		WHERE id_projeto = ".$id.";";
 
-		if (mysqli_query($conn, $upd) == TRUE) {
-			
-			$_SESSION['msg_proj'] = "Projeto removido com sucesso!";
-			header('Location: ./home.php');
-		}
-		else {
-			?>
-			<script>
-				alert("Ocorreu um erro inesperado");
-			</script>
-			<?php
-		}
+		// Desvincula as áreas relacionadas a esse projeto
+		$del = "DELETE FROM area_proj WHERE id_projeto = '".$id."'";
+		$result = $conn->query($del);
+
+		// Desvincula os professores relacionados a esse projeto
+		$del = "DELETE FROM proj_prof WHERE id_projeto = '".$id."'";
+		$result = $conn->query($del);
+
+		// Apaga o projeto
+		$del = "DELETE FROM projeto WHERE id_projeto = '".$id."'";
+		$result = $conn->query($del);
+
+		$_SESSION['msg_proj'] = "Projeto exluído com sucesso!";
+		header('Location: ./home.php');
 	}
 
 	if (isset($_POST['salvar_dados'])) {
@@ -87,33 +86,33 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 		if ($var_site) {
 			if ($var_alunos) {
 				$insertSQL = "UPDATE projeto
-				SET nome = '".$_POST['nome']."', descricao = '".$_POST['descricao']."', data_inicio = '".$_POST['data']."', concluido = '".$_POST['andamento']."', site_proj = '".$_POST['site']."', alunos = '".$_POST['alunos']."', foto = '".$novoNome."', sexo = '".$_POST['sexo']."'
+				SET nome = '".$_POST['nome']."', descricao = '".$_POST['descricao']."', data_inicio = '".$_POST['data']."', concluido = '".$_POST['andamento']."', site_proj = '".$_POST['site']."', alunos = '".$_POST['alunos']."', foto = '".$novoNome."', sem_ini = '".$_POST['sem_ini']."', tipo_proj = '".$_POST['tipo_proj']."'
 				WHERE id_projeto = ".$id.";";				
 			}
 			else {
 				$insertSQL = "UPDATE projeto
-				SET nome = '".$_POST['nome']."', descricao = '".$_POST['descricao']."', data_inicio = '".$_POST['data']."', concluido = '".$_POST['andamento']."', site_proj = '".$_POST['site']."', foto = '".$novoNome."', sexo = '".$_POST['sexo']."'
+				SET nome = '".$_POST['nome']."', descricao = '".$_POST['descricao']."', data_inicio = '".$_POST['data']."', concluido = '".$_POST['andamento']."', site_proj = '".$_POST['site']."', foto = '".$novoNome."', sem_ini = '".$_POST['sem_ini']."', tipo_proj = '".$_POST['tipo_proj']."'
 				WHERE id_projeto = ".$id.";";					
 			}
 		}
 		else {
 			if ($var_alunos) {
 				$insertSQL = "UPDATE projeto
-				SET nome = '".$_POST['nome']."', descricao = '".$_POST['descricao']."', data_inicio = '".$_POST['data']."', concluido = '".$_POST['andamento']."', alunos = '".$_POST['alunos']."', foto = '".$novoNome."', sexo = '".$_POST['sexo']."'
+				SET nome = '".$_POST['nome']."', descricao = '".$_POST['descricao']."', data_inicio = '".$_POST['data']."', concluido = '".$_POST['andamento']."', alunos = '".$_POST['alunos']."', foto = '".$novoNome."', sem_ini = '".$_POST['sem_ini']."', tipo_proj = '".$_POST['tipo_proj']."'
 				WHERE id_projeto = ".$id.";";						
 			}
 			else {
 				$insertSQL = "UPDATE projeto
-				SET nome = '".$_POST['nome']."', descricao = '".$_POST['descricao']."', data_inicio = '".$_POST['data']."', concluido = '".$_POST['andamento']."', foto = '".$novoNome."', sexo = '".$_POST['sexo']."'
+				SET nome = '".$_POST['nome']."', descricao = '".$_POST['descricao']."', data_inicio = '".$_POST['data']."', concluido = '".$_POST['andamento']."', foto = '".$novoNome."', sem_ini = '".$_POST['sem_ini']."', tipo_proj = '".$_POST['tipo_proj']."'
 				WHERE id_projeto = ".$id.";";					
 			}		
 		}
-		
+
 		if (mysqli_query($conn, $insertSQL) == TRUE) {
 			
 			$scriptSQL = "SELECT *
-										FROM projeto
-										WHERE id_projeto = ".$id;
+			FROM projeto
+			WHERE id_projeto = ".$id;
 
 			$result = $conn->query($scriptSQL);
 			$vetor = $result->fetch_object();			
@@ -136,28 +135,28 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 		
 		if (count($_POST['checkarea']) != NULL) {
 			foreach ($_POST['checkarea'] as $key => $value) {
-					for (;$objArea->id_area != NULL && $objArea->id_area < $value;) {
-						//Remove a tupla
-						$del_area = "DELETE FROM area_proj WHERE id_area =".$objArea->id_area." AND id_projeto =".$id;
-						$conn->query($del_area);
-						//Incrementa o obj
-						if ($objArea->id_area != NULL) {
-							$objArea = $sel->fetch_object();
-						}
-					}
-					//Verifica se o id encontrado precisa ser inserido
-					if ($objArea->id_area != NULL && $value < $objArea->id_area) {
-						$ins_area = "INSERT INTO area_proj (id_area, id_projeto) VALUE ('".$value."', '".$id."')";
-						$conn->query($ins_area);
-					}
-					else if ($objArea->id_area != NULL && $objArea->id_area == $value) {
+				for (;$objArea->id_area != NULL && $objArea->id_area < $value;) {
+					//Remove a tupla
+					$del_area = "DELETE FROM area_proj WHERE id_area =".$objArea->id_area." AND id_projeto =".$id;
+					$conn->query($del_area);
+					//Incrementa o obj
+					if ($objArea->id_area != NULL) {
 						$objArea = $sel->fetch_object();
 					}
-					else if ($objArea->id_area == NULL) {
-						$ins_area = "INSERT INTO area_proj (id_area, id_projeto) VALUE ('".$value."', '".$id."')";
-						$conn->query($ins_area);				
-					}
 				}
+				//Verifica se o id encontrado precisa ser inserido
+				if ($objArea->id_area != NULL && $value < $objArea->id_area) {
+					$ins_area = "INSERT INTO area_proj (id_area, id_projeto) VALUE ('".$value."', '".$id."')";
+					$conn->query($ins_area);
+				}
+				else if ($objArea->id_area != NULL && $objArea->id_area == $value) {
+					$objArea = $sel->fetch_object();
+				}
+				else if ($objArea->id_area == NULL) {
+					$ins_area = "INSERT INTO area_proj (id_area, id_projeto) VALUE ('".$value."', '".$id."')";
+					$conn->query($ins_area);				
+				}
+			}
 
 			//Se ainda restar tuplas checked para ser removidas
 			while ($objArea->id_area != NULL) {
@@ -166,53 +165,53 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 				$objArea = $sel->fetch_object();
 			}
 		}
-			
-			//Update dos dados dos professores
-			$selProf = "SELECT id_professor
-			FROM proj_prof
-			WHERE id_projeto ='".$id."' AND id_projeto !=".$_SESSION['idSave'];
-
-			$sel = $conn->query($selProf);
-			$objProf = $sel->fetch_object();
 		
+		//Update dos dados dos professores
+		$selProf = "SELECT id_professor
+		FROM proj_prof
+		WHERE id_projeto ='".$id."' AND id_projeto !=".$_SESSION['idSave'];
+
+		$sel = $conn->query($selProf);
+		$objProf = $sel->fetch_object();
+	
 //			if (count($_POST['checkprof']) != NULL) {
-				foreach ($_POST['checkprof'] as $key => $val) {
-					for (;$objProf->id_professor != NULL && $objProf->id_professor < $val;) {
-						//Remove a tupla
-						if ($objProf->id_professor != $_SESSION['idSave']) {
-							$del_prof = "DELETE FROM proj_prof WHERE id_professor =".$objProf->id_professor." AND id_projeto =".$id;
-							$conn->query($del_prof);							
-						}	
-						//Incrementa o obj
-						if ($objProf->id_professor != NULL) {
-							$objProf = $sel->fetch_object();
-						}
-					}
-					//Verifica se o id encontrado precisa ser inserido
-					if ($objProf->id_professor != NULL && $val < $objProf->id_professor) {
-						$ins_prof = "INSERT INTO proj_prof (id_professor, id_projeto) VALUE ('".$val."', '".$id."')";
-						$conn->query($ins_prof);
-					}
-					else if ($objProf->id_professor != NULL && $objProf->id_professor == $val) {
+			foreach ($_POST['checkprof'] as $key => $val) {
+				for (;$objProf->id_professor != NULL && $objProf->id_professor < $val;) {
+					//Remove a tupla
+					if ($objProf->id_professor != $_SESSION['idSave']) {
+						$del_prof = "DELETE FROM proj_prof WHERE id_professor =".$objProf->id_professor." AND id_projeto =".$id;
+						$conn->query($del_prof);							
+					}	
+					//Incrementa o obj
+					if ($objProf->id_professor != NULL) {
 						$objProf = $sel->fetch_object();
 					}
-					else if ($objProf->id_professor == NULL) {
-						$ins_prof = "INSERT INTO proj_prof (id_professor, id_projeto) VALUE ('".$val."', '".$id."')";
-						$conn->query($ins_prof);				
-					}
 				}
-
-				//Se ainda restar tuplas checked para ser removidas
-				while ($objProf->id_professor != NULL) {
-					if ($objProf->id_professor != $_SESSION['idSave']) {						
-					$del_prof = "DELETE FROM proj_prof WHERE id_professor =".$objProf->id_professor." AND id_projeto =".$id;
-					$conn->query($del_prof);
-					}
+				//Verifica se o id encontrado precisa ser inserido
+				if ($objProf->id_professor != NULL && $val < $objProf->id_professor) {
+					$ins_prof = "INSERT INTO proj_prof (id_professor, id_projeto) VALUE ('".$val."', '".$id."')";
+					$conn->query($ins_prof);
+				}
+				else if ($objProf->id_professor != NULL && $objProf->id_professor == $val) {
 					$objProf = $sel->fetch_object();
 				}
+				else if ($objProf->id_professor == NULL) {
+					$ins_prof = "INSERT INTO proj_prof (id_professor, id_projeto) VALUE ('".$val."', '".$id."')";
+					$conn->query($ins_prof);				
+				}
+			}
 
-			$_SESSION['msg_proj'] = "Projeto alterado com sucesso!";
-			header('Location: ./home.php');
+			//Se ainda restar tuplas checked para ser removidas
+			while ($objProf->id_professor != NULL) {
+				if ($objProf->id_professor != $_SESSION['idSave']) {						
+				$del_prof = "DELETE FROM proj_prof WHERE id_professor =".$objProf->id_professor." AND id_projeto =".$id;
+				$conn->query($del_prof);
+				}
+				$objProf = $sel->fetch_object();
+			}
+
+		$_SESSION['msg_proj'] = "Projeto alterado com sucesso!";
+		header('Location: ./home.php');
 	}
 
 ?>
@@ -348,9 +347,9 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 								</div>
 								<div class="form-group">
 									<label>SEMESTRE DE INICIO<span class="ast">*</span></label><br>
-									<input type="radio" id="sem_ini1" name="sem_ini" value="0">
+									<input type="radio" id="sem_ini1" name="sem_ini" value="0" <?php if ($vetor->sem_ini == 0) echo 'checked';?>>
 									<label> Primeiro</label><br>
-									<input type="radio" id="sem_ini2" name="sem_ini" value="1">
+									<input type="radio" id="sem_ini2" name="sem_ini" value="1" <?php if ($vetor->sem_ini == 1) echo 'checked';?>>
 									<label> Segundo</label>
 								</div>
 							</div>
@@ -366,11 +365,11 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 							<div class="col-2 vertical-line">
 								<div class="form-group">
 									<label>TIPO DO PROJETO<span class="ast">*</span></label><br>
-									<input type="radio" id="tipo_proj1" name="tipo_proj" value="0"> <!-- Depois terminar com <?php if ($vetor->concluido == false) echo 'checked';?> value="0" -->
+									<input type="radio" id="tipo_proj1" name="tipo_proj" value="0" <?php if ($vetor->tipo_proj == 0) echo 'checked';?>>
 									<label> Projeto pessoal</label><br>
-									<input type="radio" id="tipo_proj2" name="tipo_proj" value="1">
+									<input type="radio" id="tipo_proj2" name="tipo_proj" value="1" <?php if ($vetor->tipo_proj == 1) echo 'checked';?>>
 									<label> Projeto de disciplina</label><br>
-									<input type="radio" id="tipo_proj3" name="tipo_proj" value="2">
+									<input type="radio" id="tipo_proj3" name="tipo_proj" value="2" <?php if ($vetor->tipo_proj == 2) echo 'checked';?>>
 									<label> Projeto extensão</label>
 								</div>
 							</div>							
