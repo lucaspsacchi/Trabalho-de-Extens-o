@@ -27,8 +27,6 @@
 		include './includes/topnav.php'
 	?>
 
-	<br><br>
-
 	<div class="container">
 		<div class="row text-center">
 			<?php

@@ -96,7 +96,7 @@ if (isset($_POST['salvar_dados'])) {
                                 <div class="col-3 col-md-3 vertical-line">
                                     <div class="form-group">
                                         <label>SEXO<span class="ast">*</span></label><br>
-                                        <input type="radio" id="masc" name="sexo" value="0">
+                                        <input type="radio" id="masc" name="sexo" value="0" checked>
                                         <label> Masculino</label><br>
                                         <input type="radio" id="femi" name="sexo" value="1">
                                         <label> Feminino</label><br>							

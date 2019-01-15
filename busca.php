@@ -3,6 +3,7 @@
 
 	$flag = true;
 	$act = 0;
+	$page = 0;
 	//Home
 	if ($_POST['todos_proj'] == 1) {
 		$scriptSQL = "SELECT id_projeto, nome, descricao, foto, enable
@@ -10,6 +11,7 @@
 									ORDER BY id_projeto DESC";
 
 		$result = $conn->query($scriptSQL);
+		$page = 1;
 	}
 	//Professor
 	else if ($_POST['id_prof'] != NULL) {
@@ -19,6 +21,15 @@
 									ORDER BY id_projeto DESC";
 
 		$result = $conn->query($scriptSQL);
+
+		// Busca pelas informações do professor
+		$scriptSQL = "SELECT nome, descricao, foto, site
+						FROM professor
+						WHERE id_professor =".$_POST['id_prof']."";
+
+		$rprof = $conn->query($scriptSQL);
+		$prof=$rprof->fetch_object();
+		$page = 2;
 	}
 	//Área
 	else if ($_POST['id_area'] != NULL) {
@@ -28,6 +39,7 @@
 									ORDER BY id_projeto DESC";
 
 		$result = $conn->query($scriptSQL);
+		$page = 3;
 	}
 	//Ano
 	else if ($_POST['ano'] != NULL) {
@@ -37,6 +49,7 @@
 									ORDER BY id_projeto DESC";
 
 		$result = $conn->query($scriptSQL);
+		$page = 4;
 	}
 	//Busca
 	else if ($_POST['search'] != NULL) {
@@ -77,15 +90,53 @@
 
 	<!-- Topnav -->
 	<?php
-		$page = 0; // Default
 		include './includes/topnav.php'
 	?>
 
-	<br>
-	<br>
 
 	<div class="container">
 
+		<!-- Exibe as informações do professor se a busca vier da tela de professores -->
+		<?php 
+		if ($_POST['id_prof'] != NULL) {?>
+		<div class="card-custom">
+			<div class="col-12 col-md-12">
+				<center>
+					<label style="font-size: 26px;"><strong><?php echo $prof->nome; ?></strong></label><br> <!-- Nome -->
+					<?php if ($prof->site != NULL) {
+						// Verifica se tem http no começo da url
+						if (strncmp('http', $prof->site, 4) == 0) {
+							echo "<label><a href='$prof->site' target='_blank'>$prof->site</a></label><br>";
+						}
+						else {
+							echo "<label><a href='http://$prof->site' target='_blank'>http://$prof->site</a></label><br>";
+						}
+					} ?>
+				</center>
+			</div>
+			<div class="col-12 col-md-12">
+				<div class="row">
+					<div class="col-3 col-md-3">
+						<div class="container-img-prof">
+							<img class="card-img" src="./Imagens/<?php echo $prof->foto;?>">
+						</div>
+					</div>
+					<div class="col-9 col-md-9">
+						<div class="card-block-prof">
+							<p id="over" class="card-text p-buscar"><?php echo $prof->descricao;?></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<?php
+		}
+		?>
+		<br>
+		<hr>
+		<br>
+
+		<!-- Exibe os projetos da busca -->
 		<?php
 		if ($flag == true) { // Se foi feito alguma busca
 			$cont = 0;

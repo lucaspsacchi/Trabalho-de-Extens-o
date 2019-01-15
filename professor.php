@@ -26,11 +26,9 @@
 		include './includes/topnav.php'
 	?>
 
-	<br>
-	<br>
-
 	<div class="container">
 
+		<!-- Professores -->
 		<?php
 			while($vetor=$result->fetch_object()) {
 		?>
@@ -44,7 +42,7 @@
 						<div class="col-xl-9 col-lg-8">
 							<div class="card-block-prof">
 								<h4 class="card-text"><strong><?php echo $vetor->nome;?></strong></h4>
-								<p class="card-text p-prof"><?php echo $vetor->descricao;?></p>
+								<p id="over" class="card-text p-prof"><?php echo $vetor->descricao;?></p>
 								<form class="btn-prof" method="post" action="./busca.php">
 									<input type="hidden" name="id_prof" value="<?php echo $vetor->id_professor;?>">
 									<button class="btn btn-secondary">Ver projetos</button>
@@ -66,3 +64,24 @@
 
 </body>
 </html>
+
+<script>
+var x = document.getElementsByTagName("p");
+
+// Retirado do 
+function truncateText(element, maxLength) {
+	var truncated = element.innerText; // Pega o texto
+
+	if (truncated.length > maxLength) { // Se é maior que o maxLength passado pelo parâmetro
+		truncated = truncated.substr(0,maxLength); // Copia apenas a parte menor
+		// Procura o último espaço, copia apenas a parte anterior a esse index e concatenando com '...'
+		truncated = truncated.substr(0, truncated.lastIndexOf(" ")) + '...';
+	}
+return truncated;
+}
+
+for (i = 0; i < x.length; i++) {
+	x[i].innerHTML = truncateText(x[i], 400);
+}
+
+</script>

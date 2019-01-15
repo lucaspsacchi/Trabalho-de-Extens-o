@@ -25,9 +25,6 @@
 		include './includes/topnav.php'
 	?>
 
-	<br>
-	<br>
-
 	<div class="container">
 		
 		<?php

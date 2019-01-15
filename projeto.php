@@ -49,8 +49,6 @@ else {
 		include './includes/topnav.php'
 	?>
 
-	<br><br>
-
 	<div class="container">
 		<?php
 		if ($flag) {
@@ -115,21 +113,29 @@ else {
 							while ($prof = $resultProf->fetch_object()) {
 								if ($prof->sexo == 'M') {
 									if ($prof->site != NULL) {
-										?>
-											<a href="http://<?php echo $prof->site;?>" target="_blank">Prof. Dr. <?php echo $prof->nome;?></a>
-										<?php	
+										// Verifica se tem http no começo da url
+										if (strncmp('http', $prof->site, 4) == 0) {
+											echo "<a href='<?php echo $prof->site;?>' target='_blank'>Prof. Dr. <?php echo $prof->nome;?></a>";
+										}
+										else {
+											echo "<a href='http://<?php echo $prof->site;?>' target='_blank'>Prof. Dr. <?php echo $prof->nome;?></a>";
+										}
 									}
 									else {
 										?>
 											<label>Prof. Dr. <?php echo $prof->nome;?></label>
 										<?php											
-									}			
+									}		
 								}
 								else {
 									if ($prof->site != NULL) {
-										?>
-											<a href="http://<?php echo $prof->site;?>" target="_blank">Profa. Dra. <?php echo $prof->nome;?></a>
-										<?php	
+										// Verifica se tem http no começo da url
+										if (strncmp('http', $prof->site, 4) == 0) {
+											echo "<a href='$prof->site' target='_blank'>Profa. Dra. $prof->nome</a>";
+										}
+										else {
+											echo "<a href='http://$prof->site' target='_blank'>Profa. Dra. $prof->nome</a>";
+										}	
 									}
 									else {
 										?>

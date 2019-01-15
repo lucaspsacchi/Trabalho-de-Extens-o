@@ -60,7 +60,7 @@ nav .h4-home {
 .p-prof {
 	text-align: justify;
 	margin-right: 10px;
-	height: 100px;
+	height: 96px;
 	overflow: hidden;
 }
 
@@ -209,4 +209,17 @@ h3 {
   
 .topnav .search-container button:hover {
 	background: #ccc;
+}
+
+.p-buscar {
+	text-align: justify;
+	margin-right: 10px;
+}
+
+.card-custom {
+	padding: 10px;
+}
+
+.card-custom center {
+	margin-bottom: 10px;
 }
