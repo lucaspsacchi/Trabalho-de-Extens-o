@@ -24,7 +24,7 @@
 		$result = $conn->query($scriptSQL);
 
 		// Busca pelas informações do professor
-		$scriptSQL = "SELECT nome, descricao, foto, site
+		$scriptSQL = "SELECT nome, descricao, foto, site, sexo
 						FROM professor
 						WHERE id_professor =".$_POST['id_prof']."";
 
@@ -66,7 +66,7 @@
 		if ($rows == 0) {
 			$scriptSQL = "SELECT projeto.id_projeto, projeto.nome, projeto.descricao, projeto.foto, projeto.enable
 			FROM (proj_prof NATURAL JOIN projeto), professor 
-			WHERE professor.id_professor = proj_prof.id_professor AND professor.nome LIKE ".$string." OR projeto.alunos LIKE".$string."
+			WHERE professor.id_professor = proj_prof.id_professor AND professor.nome LIKE ".$string." OR projeto.alunos LIKE ".$string."
 			GROUP BY(projeto.id_projeto)";
 
 			$result = $conn->query($scriptSQL);
@@ -103,7 +103,20 @@
 		<div class="card-custom">
 			<div class="col-12 col-md-12">
 				<center>
-					<label style="font-size: 26px;"><strong><?php echo $prof->nome; ?></strong></label><br> <!-- Nome -->
+				<label style="font-size: 26px;">
+						<strong>
+							<!-- Nome -->
+							<?php
+								if ($prof->sexo == 0) {
+									echo 'Prof. Dr. ' . $prof->nome;
+								}
+								else {
+									echo 'Profa. Dra. ' . $prof->nome;
+								}
+							?>
+						</strong>
+					</label>
+					<br>
 					<?php if ($prof->site != NULL) {
 						// Verifica se tem http no começo da url
 						if (strncmp('http', $prof->site, 4) == 0) {
@@ -131,7 +144,9 @@
 			</div>
 		</div>
 		<?php
-		echo '<br><hr><br>';
+		echo '<br><hr><br>'; // 
+
+		echo '<center><label style="font-size: 26px;"><strong>Projetos</strong></label></center><br>'; // Projetos e espaços
 		}
 		?>
 

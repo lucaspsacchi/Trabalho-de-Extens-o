@@ -2,13 +2,13 @@
   include('./connection/connection.php');
 
 	//Realiza uma busca no banco de dados para listar os professores
-	$scriptSQL = "SELECT id_area, nome, descricao, foto
-					FROM area
-					ORDER BY nome ASC";
+	// $scriptSQL = "SELECT id_area, nome, descricao, foto
+	// 				FROM area
+	// 				ORDER BY nome ASC";
 
-	// $scriptSQL = "SELECT DISTINCT id_area, nome, descricao, foto
-	// FROM area NATURAL JOIN area_proj
-	// ORDER BY nome ASC";
+	$scriptSQL = "SELECT DISTINCT id_area, nome, descricao, foto
+	FROM area NATURAL JOIN area_proj
+	ORDER BY nome ASC";
 
 	$result = $conn->query($scriptSQL);
 ?>
