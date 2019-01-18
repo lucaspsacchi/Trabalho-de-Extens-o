@@ -59,7 +59,8 @@
 		$scriptSQL = "SELECT projeto.id_projeto, projeto.nome, projeto.descricao, projeto.foto, projeto.enable
 						FROM area, area_proj, projeto, proj_prof, professor
 						WHERE area.id_area = area_proj.id_area AND projeto.id_projeto = area_proj.id_projeto AND projeto.id_projeto = proj_prof.id_projeto AND professor.id_professor = proj_prof.id_professor AND area.nome LIKE ".$string." OR projeto.nome LIKE ".$string." OR projeto.data_inicio LIKE ".$string."
-						GROUP BY(projeto.id_projeto)";
+						GROUP BY(projeto.id_projeto)
+						ORDER BY projeto.id_projeto DESC";
 
 		$result = $conn->query($scriptSQL);
 		$rows = $result->num_rows;
@@ -67,7 +68,8 @@
 			$scriptSQL = "SELECT projeto.id_projeto, projeto.nome, projeto.descricao, projeto.foto, projeto.enable
 			FROM (proj_prof NATURAL JOIN projeto), professor 
 			WHERE professor.id_professor = proj_prof.id_professor AND professor.nome LIKE ".$string." OR projeto.alunos LIKE ".$string."
-			GROUP BY(projeto.id_projeto)";
+			GROUP BY(projeto.id_projeto)
+			ORDER BY projeto.id_projeto DESC";
 
 			$result = $conn->query($scriptSQL);
 			$rows = $result->num_rows;

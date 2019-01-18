@@ -251,11 +251,11 @@ nav, .navbar-expand-md {
 	.search-container {
 		width: 100%;
 		display: flex;
-		justify-content: start;
+		justify-content: center;
 	}
 
 	.search-container input {
-		width: 100%;
+		margin-bottom: 10px;
 	}
 }
 
@@ -273,6 +273,20 @@ nav, .navbar-expand-md {
 	}
 } */
 
+@media (max-width: 992px) {
+	#img-resp-proj {
+		margin-top: 15px;
+	}
+
+	.card-block-home {
+		padding: 15px;
+	}
+
+	.p-home {
+		margin-right: 0px;
+	}
+}
+
 @media (max-width: 450px) {
 	#img-resp-proj {
 		width: 95%;
@@ -283,7 +297,8 @@ nav, .navbar-expand-md {
 		width: 90%;
 		display: flex;
 		justify-content: center;
-	}	
+	}
+
 }
 
 /* Imagem da Área */
@@ -299,6 +314,21 @@ nav, .navbar-expand-md {
 		justify-content: center;
 	}
 } */
+
+@media (max-width: 992px) {
+	#img-resp-area {
+		margin-top: 15px;
+	}
+
+	.card-block-area {
+		padding: 15px;
+	}
+
+	.p-area {
+		margin-right: 0px;
+	}
+}
+
 
 @media (max-width: 450px) {
 	#img-resp-area {
@@ -319,11 +349,20 @@ nav, .navbar-expand-md {
 	#img-resp-prof {
 		width: 210px;
 		height: 200px;
+		margin-top: 15px;
 	}
 
 	.container-img-prof {
 		width: 90%;
 		display: flex;
 		justify-content: center;
-	}	
+	}
+
+	.card-block-prof {
+		padding: 15px;
+	}
+
+	.p-prof {
+		margin-right: 0px;
+	}
 }
