@@ -39,7 +39,7 @@
 						<!-- Imagem da área -->
 						<div class="col-xl-4 col-lg-5">
 							<div class="container-img-area">
-								<img class="card-img" src="./Imagens/<?php echo $vetor->foto;?>">
+								<img class="card-img" id="img-resp-area" src="./Imagens/<?php echo $vetor->foto;?>">
 							</div>
 						</div>
 						<!-- Descrição e botão -->

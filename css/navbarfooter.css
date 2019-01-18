@@ -12,11 +12,6 @@ body {
   background-color: rgb(249,249,249);
 }
 
-.active {
-  background-color: #952427;
-  color: white;
-}
-
 .footertexto {
   width: 100%;
   height: 100%;

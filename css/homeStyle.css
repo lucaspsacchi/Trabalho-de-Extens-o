@@ -163,12 +163,22 @@ h3 {
   }
 
 .topnav a {
-	float: left;
 	display: block;
 	text-align: center;
+	color: black;
 	padding: 14px 16px;
+	padding-right: 15px !important;
+	padding-left: 15px !important;	
 	text-decoration: none;
 	font-size: 17px;
+}
+
+.navbar-toggler-icon {
+	border-color: black;
+}
+
+a {
+	color: black !important;
 }
 
 .nav-link {
@@ -177,30 +187,34 @@ h3 {
 
 .topnav a:hover {
 	background-color: #ccc;
-	color: black;
+	color: black !important;
 }
 
 .active {
 	background-color: #952427;
-	color: white;
+	color: white !important;
 }
-  
-.topnav .search-container {
-	float: right;
+
+.topnav .col-md-6 {
+	padding: 0px;
 }
-  
+
 .topnav input[type=text] {
 	padding: 6px;
 	margin-top: 8px;
 	font-size: 17px;
 	border: none;
 }
-  
+
+.search-container {
+	display: flex;
+	justify-content: end;
+}
+
 .topnav .search-container button {
-	float: right;
 	padding: 6px 10px;
 	margin-top: 8px;
-	margin-right: 16px;
+	margin-right: 10px;
 	background: #ddd;
 	font-size: 17px;
 	border: none;
@@ -227,4 +241,89 @@ h3 {
 .label-align {
 	display: flex;
 	flex-wrap: wrap;
+}
+
+nav, .navbar-expand-md {
+	padding: 0px;
+}
+
+@media (max-width: 768px) {
+	.search-container {
+		width: 100%;
+		display: flex;
+		justify-content: start;
+	}
+
+	.search-container input {
+		width: 100%;
+	}
+}
+
+/* Imagem da Projeto */
+
+/* @media (max-width: 450px) {
+	#img-resp-proj {
+		width: 290px;
+		height: 160px;
+	}
+
+	.container-img-home {
+		display: flex;
+		justify-content: center;
+	}
+} */
+
+@media (max-width: 450px) {
+	#img-resp-proj {
+		width: 95%;
+		height: 100%;
+	}
+
+	.container-img-home {
+		width: 90%;
+		display: flex;
+		justify-content: center;
+	}	
+}
+
+/* Imagem da Área */
+
+/* @media (max-width: 450px) {
+	#img-resp-area {
+		width: 290px;
+		height: 160px;
+	}
+
+	.container-img-area {
+		display: flex;
+		justify-content: center;
+	}
+} */
+
+@media (max-width: 450px) {
+	#img-resp-area {
+		width: 95%;
+		height: 100%;
+	}
+
+	.container-img-area {
+		width: 90%;
+		display: flex;
+		justify-content: center;
+	}	
+}
+
+/* Imagem da Professor */
+
+@media (max-width: 780px) {
+	#img-resp-prof {
+		width: 210px;
+		height: 200px;
+	}
+
+	.container-img-prof {
+		width: 90%;
+		display: flex;
+		justify-content: center;
+	}	
 }

@@ -34,12 +34,12 @@
 		?>
 				<div class="card">
 					<div class="row">
-						<div class="col-xl-3 col-lg-4">
+						<div class="col-xl-3 col-lg-4 col-md-4">
 							<div class="container-img-prof">
-								<img class="card-img" src="./Imagens/<?php echo $vetor->foto;?>">
+								<img class="card-img" id="img-resp-prof" src="./Imagens/<?php echo $vetor->foto;?>">
 							</div>
 						</div>
-						<div class="col-xl-9 col-lg-8">
+						<div class="col-xl-9 col-lg-8 col-md-8">
 							<div class="card-block-prof">
 								<h4 class="card-text"><strong><?php echo $vetor->nome;?></strong></h4>
 								<p id="over" class="card-text p-prof p-truncated"><?php echo $vetor->descricao;?></p>

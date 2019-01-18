@@ -130,12 +130,12 @@
 			</div>
 			<div class="col-12 col-md-12">
 				<div class="row">
-					<div class="col-3 col-md-3">
+					<div class="col-lg-3 col-md-4 col-sm-12">
 						<div class="container-img-prof">
-							<img class="card-img" src="./Imagens/<?php echo $prof->foto;?>">
+							<img class="card-img" id="img-resp-prof" src="./Imagens/<?php echo $prof->foto;?>">
 						</div>
 					</div>
-					<div class="col-9 col-md-9">
+					<div class="col-lg-9 col-md-8 col-sm-12">
 						<div class="card-block-prof">
 							<p id="over" class="card-text p-buscar"><?php echo $prof->descricao;?></p>
 						</div>
@@ -162,7 +162,7 @@
 						<!-- Imagem do projeto -->
 						<div class="col-xl-4 col-lg-5">
 							<div class="container-img-home">
-								<img class="card-img" src="./Imagens/<?php echo $vetor->foto;?>">
+								<img class="card-img" id="img-resp-proj" src="./Imagens/<?php echo $vetor->foto;?>">
 							</div>
 						</div>
 						<!-- Título, descrição e botão -->

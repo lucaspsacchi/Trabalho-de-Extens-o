@@ -36,7 +36,7 @@
 						<!-- Imagem do projeto -->
 						<div class="col-xl-4 col-lg-5 col-md-12">
 							<div class="container-img-home">
-								<img class="card-img" src="./Imagens/<?php echo $vetor->foto;?>">
+								<img class="card-img" id="img-resp-proj" src="./Imagens/<?php echo $vetor->foto;?>">
 							</div>
 						</div>
 						<div class="col-xl-8 col-lg-7 col-md-12">

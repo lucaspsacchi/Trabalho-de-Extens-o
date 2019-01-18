@@ -57,18 +57,18 @@ else {
 			<div class="card-proj">
 				<div class="flex-row d-flex justify-content-center col-md-12">
 					<div class="">
-						<img class="card-img" src="./Imagens/<?php echo $vetor->foto;?>">
+						<img class="card-img" id="img-resp-proj" src="./Imagens/<?php echo $vetor->foto;?>">
 					</div>
 				</div>
 				<div class="bloco">
-					<div class="flex-row d-flex justify-content-center">
+					<div class="d-flex">
 						<div class="card-block-proj">
 							<h3 class="card-text"><strong><?php echo $vetor->nome;?></strong></h3>
 						</div>
 					</div>
 				</div>
 				<div class="bloco">
-					<div class="flex-row d-flex justify-content-start">
+					<div class="d-flex">
 						<div class="card-block-proj">
 							<p class="card-text text-justify"><?php echo nl2br($vetor->descricao);?></p>
 						</div>
@@ -80,7 +80,7 @@ else {
 				$str = $vetor->site_proj;
 				?>
 				<div class="bloco">
-					<div class="label-align">
+					<div class="">
 						<?php
 							if (substr($str, 0, 4) == "http") {
 							?>
@@ -181,7 +181,7 @@ else {
 					if ($vetor->alunos != NULL) {
 				?>
 				<div class="bloco">
-					<div class="flex-row d-flex justify-content-start">
+					<div class="d-flex">
 						<label><strong>Alunos participantes:&nbsp;</strong><?php echo $vetor->alunos;?></label>
 					</div>
 				</div>
@@ -189,7 +189,7 @@ else {
 					}
 				?>
 				<div class="bloco">
-					<div class="flex-row d-flex justify-content-start">
+					<div class="d-flex">
 						<label><strong>Ano do início:&nbsp;</strong></label>
 						<?php
 						$aux = $vetor->sem_ini + 1; // No bd foi armazenado 0 para primeiro e 1 para segundo
