@@ -23,7 +23,7 @@
                 </div>
                 <div class="col-md-6 col-sm-12">
                     <div class="search-container">
-                        <form action="./busca.php" method="POST">
+                        <form action="./busca.php" method="get">
                             <input type="hidden" name="busca" value="true">
                             <input type="text" placeholder="Buscar" name="search">
                             <button type="submit"><i class="fa fa-search"></i></button>

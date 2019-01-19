@@ -1,5 +1,6 @@
 <?php
   include('./connection/connection.php');
+  session_start();
 
 	//Realiza uma busca no banco de dados em ordem decrescente pelo id do projeto
 	$scriptSQL = "SELECT id_projeto, foto, nome, descricao
@@ -29,8 +30,11 @@
 
 	<div class="container">
 		<!-- Breadcrumb -->
-		<label>Home</label>
-		<hr><br>
+		<!-- <label>Home</label> -->
+		<?php
+		$_SESSION['bread'] = '<a href="./home.php">Home</a>';
+		?>
+		<!-- <hr><br> -->
 
 		<?php
 			while(($vetor=$result->fetch_object())) { // Exibe os 4 projetos mais recentes

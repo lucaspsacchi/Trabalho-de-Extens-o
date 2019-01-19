@@ -1,5 +1,6 @@
 <?php
   include('./connection/connection.php');
+  session_start();
 
 	$flag = true;
 	if (isset($_GET['id_proj'])) {
@@ -52,7 +53,7 @@ else {
 	<div class="container">
 
 		<!-- Breadcrumb -->
-		<label><a href="./home.php">Home</a> > Projeto</label>
+		<label><?php echo $_SESSION['bread']; ?> > <?php echo $vetor->nome; ?></label>
 		<hr><br>
 
 		<?php
@@ -66,20 +67,20 @@ else {
 					</div>
 				</div>
 				<div class="bloco">
-					<div class="d-flex">
+					<div class="d-flex justify-content-center">
 						<div class="card-block-proj">
 							<h3 class="card-text"><strong><?php echo $vetor->nome;?></strong></h3>
 						</div>
 					</div>
 				</div>
-				<div class="bloco">
+				<div class="bloco" style="margin-bottom: 15px;">
 					<div class="d-flex">
 						<div class="card-block-proj">
 							<p class="card-text text-justify"><?php echo nl2br($vetor->descricao);?></p>
 						</div>
 					</div>
 				</div>
-				<br>
+				<hr>
 				<?php
 				if ($vetor->site_proj != NULL) {
 				$str = $vetor->site_proj;

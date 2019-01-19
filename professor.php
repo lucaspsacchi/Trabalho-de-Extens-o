@@ -29,8 +29,11 @@
 	<div class="container">
 
 		<!-- Breadcrumb -->
-		<label><a href="./home.php">Home</a> > Professores</label>
-		<hr><br>
+		<!-- <label>Professores</label> -->
+		<?php
+		$_SESSION['bread'] = '<a href="./professor.php">Professores</a>'; // Esse caso é impossível
+		?>		
+		<!-- <hr><br> -->
 
 		<!-- Professores -->
 		<?php

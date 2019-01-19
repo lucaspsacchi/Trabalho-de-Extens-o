@@ -35,7 +35,10 @@
 	<div class="container">
 
 		<!-- Breadcrumb -->
-		<label><a href="./home.php">Home</a> > <?php echo $var->nome; ?></label>
+		<label><a href="./area.php">Área</a> > <?php echo $var->nome; ?></label>
+		<?php
+		$_SESSION['bread'] = "<a href=" . './area.php' . ">Área</a> > <a href=" . $_GET['id_area'] . ">" . $var->nome . "</a>"; // Impossível
+		?>
 		<hr><br>
 
 		<div class="row text-center">

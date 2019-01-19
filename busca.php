@@ -1,5 +1,6 @@
 <?php
   include('./connection/connection.php');
+	session_start();
 
 	$flag = true;
 	$act = 0;
@@ -112,30 +113,38 @@
 			<label><a href="./home.php">Home</a> > Projetos</label>
 			<hr><br>
 			<?php
+			// Salva o caminho na sessão
+			$_SESSION['bread'] = '<a href="./home.php">Home</a> > <a href="./busca.php?todos_proj=1">Projetos</a>';
 		}
 		else if ($page == 2) { // Professor
 			?>
-			<label><a href="./home.php">Home</a> > <a href="./professor.php">Professores</a> > Projetos</label>
+			<label><a href="./professor.php">Professores</a> > Projetos</label>
 			<hr><br>
 			<?php
+			$var = "<a href=" . './professor.php' . ">Professores</a> > <a href=" . './busca.php?id_prof=' . $_GET['id_prof'] . "> " . $prof->nome . "</a>"; // Gambiarra para concatenar os caminhos e variável
+			$_SESSION['bread'] = $var;
 		}
 		else if ($page == 3) { // Área
 			?>
-			<label><a href="./home.php">Home</a> > <a href="./areaano.php?id_area=<?php echo $_GET['id_area']; ?>"><?php echo $var->nome; ?></a> > <?php echo $_GET['ano'] . '/' . ($_GET['sem'] + 1); ?></label>
+			<label><a href="./area.php">Área</a> > <a href="./areaano.php?id_area=<?php echo $_GET['id_area']; ?>"><?php echo $var->nome; ?></a> > <?php echo $_GET['ano'] . '/' . ($_GET['sem'] + 1); ?></label>
 			<hr><br>
 			<?php
+			$anosem = $_GET['ano'] . '/' . ($_GET['sem'] + 1);
+			$_SESSION['bread'] = "<a href=" . './area.php' . ">Área</a> > <a href=./areaano.php?id_area=" . $_GET['id_area'] . ">" . $var->nome . "</a> > <a href=./busca.php?id_area=" . $_GET['id_area'] . "&ano=" . $_GET['ano'] . "&sem=" . $_GET['sem'] . ">" . $anosem . "</a>"; // Gambiarra para concatenar os caminhos e variável
 		}
 		else if ($page == 4) { // Ano
 			?>
-			<label><a href="./home.php">Home</a> > <a href="./ano.php"><?php echo $_GET['ano']; ?></a> > Projetos</label>
+			<label><a href="./ano.php">Ano</a> > <?php echo $_GET['ano']; ?></label>
 			<hr><br>
 			<?php
+			$_SESSION['bread'] = "<a href=". './ano.php' .">Ano</a> > <a href=./busca.php?ano=" . $_GET['ano'] . ">" . $_GET['ano'] . "</a>"; // Gambiarra para concatenar os caminhos e variável
 		}
 		else { // Busca
 			?>
-			<label><a href="./home.php">Home</a> > Projetos</label>
+			<label><a href="./home.php">Home</a> > Busca</label>
 			<hr><br>
 			<?php
+			$_SESSION['bread'] = "<a href=" . './home.php' . ">Home</a> > <a href=./busca.php?search=" . $_GET['search'] . ">Busca</a>";
 		}
 		?>
 

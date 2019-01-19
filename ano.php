@@ -30,8 +30,11 @@
 	<div class="container">
 
 		<!-- Breadcrumb -->
-		<label><a href="./home.php">Home</a> > Ano de início</label>
-		<hr><br>
+		<!-- <label><a href="./home.php">Home</a> > Ano de início</label> -->
+		<?php
+		$_SESSION['bread'] = '<a href="./ano.php">Ano</a>';
+		?>		
+		<!-- <hr><br> -->
 
 		<div class="row text-center">
 			<?php

@@ -32,8 +32,11 @@
 	<div class="container">
 
 		<!-- Breadcrumb -->
-		<label><a href="./home.php">Home</a> > Áreas</label>
-		<hr><br>
+		<!-- <label>Áreas</label> -->
+		<?php
+		$_SESSION['bread'] = '<a href="./area.php">Área</a>'; // Impossível
+		?>
+		<!-- <hr><br> -->
 
 		<?php
 			while($vetor=$result->fetch_object()) { // Exibe todas as áreas retornadas do bd
