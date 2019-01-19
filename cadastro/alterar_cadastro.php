@@ -12,8 +12,8 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 
 	//Realiza uma busca no banco de dados para listar os projetos de um professor em específico
 	$scriptSQL = "SELECT *
-								FROM projeto
-								WHERE id_projeto = ".$id;
+	FROM projeto
+	WHERE id_projeto = ".$id;
 
 	$result = $conn->query($scriptSQL);
 	$vetor = $result->fetch_object();
@@ -39,15 +39,23 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 
 	if (isset($_POST['salvar_dados'])) {
 
-		// Erros
-		if (count($_POST['checkarea']) == 0) {
-				
+		// Verifica se os campos de checkbox foram preenchidos
+		if ($_POST['checkarea'] == NULL) {
+			$_SESSION['msg_erro'] = 'Pelo menos uma área deve ser selecionada';
+			header('Location: ./alterar_cadastro.php');
 		}
-		else if (count($_POST['checkprof'])) {
-
+		else if ($_POST['checkarea'] != NULL) {
+			$flag_check = 0;
+			foreach($_POST['checkarea'] as $key => $value) {
+				if ($value != NULL) {
+					$flag_check = 1; // Procura algum check
+				}
+			}
+			if ($flag_check == 0) { // Exibe mensagem de erro se não foi marcado nenhum checkbox
+				$_SESSION['msg_erro'] = 'Pelo menos uma área deve ser selecionada';
+				header('Location: ./alterar_cadastro.php');				
+			}
 		}
-
-
 
 
 		if (isset($_FILES["file"]["type"])) {
@@ -509,3 +517,21 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 		</script>
 </html>
 
+
+<?php
+if (isset($_SESSION['msg_erro'])) {
+?>
+<script>
+$(document).ready(function() {
+	Swal({
+		type: 'error',
+		title: 'Erro ao cadastrar projeto!',
+		text: '<?php echo $_SESSION['msg_erro'];?>'
+	})
+})
+</script>
+
+<?php
+unset($_SESSION['msg_erro']);
+}
+?>

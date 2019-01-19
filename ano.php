@@ -63,7 +63,7 @@
 		</div>
 	</div>
 
-	<br><br>
+	<br><br><br>
 
 	<!-- Footer -->
 	<?php include './includes/footer.php'?>

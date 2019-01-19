@@ -40,6 +40,13 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 	}
 
 	if (isset($_POST['salvar_dados'])) {
+
+		// Verifica se os campos de checkbox foram preenchidos
+		if ($_POST['checkarea'] == NULL) {
+			$_SESSION['msg_erro'] = 'Pelo menos uma área deve ser selecionada';
+		}
+
+
 		
 		if (count($_POST['checkarea'])) {
 		
@@ -137,6 +144,9 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 
 		<link rel="stylesheet" href="../css/cadStyle.css">
 		
+		<!-- Sweet Alert 2 -->
+		<script src="../sweetalert2-master/dist/sweetalert2.min.js"></script>
+		<link rel="stylesheet" href="../sweetalert2-master/dist/sweetalert2.min.css">		
 		<!-- Cropper -->
 		<!-- <link  href="../cropperjs-master/dist/cropper.css" rel="stylesheet">
 		<script src="../cropperjs-master/dist/cropper.js"></script> -->
@@ -376,3 +386,21 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 			);			
 		</script>
 </html>
+
+<?php
+if (isset($_SESSION['msg_erro'])) {
+?>
+<script>
+$(document).ready(function() {
+	Swal({
+		type: 'error',
+		title: 'Erro ao cadastrar projeto!',
+		text: '<?php echo $_SESSION['msg_erro'];?>'
+	})
+})
+</script>
+
+<?php
+unset($_SESSION['msg_erro']);
+}
+?>

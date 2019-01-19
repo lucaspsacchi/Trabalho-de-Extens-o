@@ -3,6 +3,7 @@
 	<meta charset="utf-8">
 	<meta name="author" content="Lucas Penteado Sacchi">
 	<meta name="author" content="Sofia de Almeida Machado da Silveira">	
+	<meta name="description" content="O InterBCCS disponibiliza projetos feitos por professores e alunos do Departamento de Computação (DComp) da Universidade Federal de São Carlos, campus Sorocaba.">
 	<title>InterBCCS</title>
 	<link rel="shortcut icon" type="image/png" href="./Imagens/Inter%20BCCS%20Logo%20Fundo%20Branco.png">
 
