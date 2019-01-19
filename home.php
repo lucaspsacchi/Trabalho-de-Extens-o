@@ -28,6 +28,10 @@
 	?>
 
 	<div class="container">
+		<!-- Breadcrumb -->
+		<label>Home</label>
+		<hr><br>
+
 		<?php
 			while(($vetor=$result->fetch_object())) { // Exibe os 4 projetos mais recentes
 		?>
@@ -45,9 +49,9 @@
 								<h4 class="card-text h4-home"><strong><?php echo $vetor->nome;?></strong></h4>
 								<p class="card-text p-home p-truncated"><?php echo $vetor->descricao;?></p>
 								<!--<button class="btn btn-secondary">Saiba mais</button>-->
-								<form method="POST" action="./projeto.php">
-									<input type="hidden" name="id_proj" value="<?php echo $vetor->id_projeto;?>"> <!--Id do projeto é passado pelo método post -->
-									<input type="submit" class="btn btn-secondary btn-home" name="botao" value="Saiba mais">
+								<form method="GET" action="./projeto.php?id_proj">
+									<input type="hidden" name="id_proj" value="<?php echo $vetor->id_projeto;?>">
+									<button type="submit" class="btn btn-secondary btn-home">Saiba mais</button>
 								</form>
 							</div>
 						</div>
@@ -60,7 +64,7 @@
 		
 		<br>
 		<div class="d-flex flex-row justify-content-center col-md-12">
-			<form name="form" action="./busca.php" method="post">
+			<form name="form" action="./busca.php" method="GET">
 				<input type="hidden" id="todos_projetos" name="todos_proj" value="1">
 				<button class="btn btn-secondary btn-home">Ver todos projetos</button>
 			</form>

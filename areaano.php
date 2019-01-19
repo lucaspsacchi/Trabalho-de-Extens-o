@@ -1,12 +1,17 @@
 <?php
   include('./connection/connection.php');
 
-	//Realiza uma busca no banco de dados para listar os anos em ordem decrescente e a quantidade de projetos do mesmo ano
-	$scriptSQL = "SELECT data_inicio, count(data_inicio) as num
-				FROM projeto
-				WHERE enable = 1
-				GROUP BY data_inicio
-				ORDER BY data_inicio DESC";
+	// Busca pelo nome da área
+	$script = "SELECT nome FROM area WHERE id_area = ".$_GET['id_area'];
+
+	$nome = $conn->query($script);
+	$var = $nome->fetch_object();
+
+	//Realiza uma busca no banco de dados para listar as áreas
+    $scriptSQL = "SELECT data_inicio, sem_ini, count(*) as num
+    FROM projeto NATURAL JOIN area_proj 
+    WHERE id_area = '".$_GET['id_area']."'
+    GROUP BY sem_ini, data_inicio";
 
 	$result = $conn->query($scriptSQL);
 ?>
@@ -20,17 +25,17 @@
 
 	<!-- Capa -->
 	<?php include './includes/capa.php'?>
-	
+
 	<!-- Topnav -->
 	<?php
-		$page = 4;
+		$page = 3;
 		include './includes/topnav.php'
 	?>
 
 	<div class="container">
 
 		<!-- Breadcrumb -->
-		<label><a href="./home.php">Home</a> > Ano de início</label>
+		<label><a href="./home.php">Home</a> > <?php echo $var->nome; ?></label>
 		<hr><br>
 
 		<div class="row text-center">
@@ -41,10 +46,12 @@
 					<div class="col-lg-3 col-md-4 col-sm-6">
 						<div class="card">
 							<div class="card-body">
-								<h1 class="h1-ano"><strong><?php echo $vetor->data_inicio?></strong></h1>
+								<h1 class="h1-ano"><strong><?php echo $vetor->data_inicio . '/' . ($vetor->sem_ini + 1);?></strong></h1>
 								<p><?php echo $vetor->num;?> projetos encontrados</p>
-								<form method="GET" action="./busca.php">
-									<input type="hidden" name="ano" value="<?php echo $vetor->data_inicio;?>">
+								<form method="GET" action="./busca.php"> <!-- Redireciona para a página busca com o id da área escolhida -->
+									<input type="hidden" name="id_area" value="<?php echo $_GET['id_area'];?>">
+                                    <input type="hidden" name="ano" value="<?php echo $vetor->data_inicio;?>">
+                                    <input type="hidden" name="sem" value="<?php echo $vetor->sem_ini;?>">
 									<button class="btn btn-secondary">Ver projetos</button>
 								</form>
 							</div>

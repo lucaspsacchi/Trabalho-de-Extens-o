@@ -2,11 +2,11 @@
   include('./connection/connection.php');
 
 	$flag = true;
-	if (isset($_POST['id_proj'])) {
+	if (isset($_GET['id_proj'])) {
 	//Realiza uma busca no banco de dados para os projetos
 	$scriptSQL = "SELECT *
 					FROM projeto
-					WHERE id_projeto =".$_POST['id_proj'];
+					WHERE id_projeto =".$_GET['id_proj'];
 
 	$result = $conn->query($scriptSQL);
 	$vetor = $result->fetch_object();
@@ -14,14 +14,14 @@
 	//Realiza uma busca no banco de dados para os professores
 	$scriptProf = "SELECT professor.nome, professor.sexo, professor.site
 					FROM professor NATURAL JOIN proj_prof
-					WHERE proj_prof.id_projeto =".$_POST['id_proj'];
+					WHERE proj_prof.id_projeto =".$_GET['id_proj'];
 		
 	$resultProf = $conn->query($scriptProf);
 	$profnum = $resultProf->num_rows;
 	//Realiza uma busca no banco de dados para as áreas
 	$scriptArea = "SELECT area.nome
 					FROM area NATURAL JOIN area_proj
-					WHERE area_proj.id_projeto =".$_POST['id_proj']."
+					WHERE area_proj.id_projeto =".$_GET['id_proj']."
 					ORDER BY area.nome asc";
 		
 	$resultArea = $conn->query($scriptArea);
@@ -50,6 +50,11 @@ else {
 	?>
 
 	<div class="container">
+
+		<!-- Breadcrumb -->
+		<label><a href="./home.php">Home</a> > Projeto</label>
+		<hr><br>
+
 		<?php
 		if ($flag) {
 		?>

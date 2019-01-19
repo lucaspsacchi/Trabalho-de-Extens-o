@@ -177,12 +177,12 @@ h3 {
 	border-color: black;
 }
 
-a {
+/* a {
 	color: black !important;
-}
+} */
 
 .nav-link {
-	color: black;
+	color: black !important;
 }
 
 .topnav a:hover {

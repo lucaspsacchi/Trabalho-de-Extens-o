@@ -179,44 +179,63 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 							<textarea type="text" name="descricao" class="form-control" rows="3" required maxlength="1000" id="description" placeholder="Insira a descrição do projeto"></textarea>
 						</div>
 						<hr>
+						<center>
+							<label>ÁREAS<span class="ast">*</span></label>
+						</center>
+						<br>
 						<div class="row">
-							<div class="col-6">
-								<label>ÁREAS<span class="ast">*</span></label>
+							<div class="col-4">
 								<div class="form-group">
 								<?php
 										$res_area = $conn->query($scriptArea);
 										$rowarea = $res_area->num_rows;
+										$count = 0;
 
 										while ($obj_area=$res_area->fetch_object()) {
 								?>
 											<input type="checkbox" name="checkarea[]" value="<?php echo $obj_area->id_area;?>">
-											<label><?php echo $obj_area->nome;?></label>
+											<span style="font-size: 16px; line-height: 2rem;"><?php echo $obj_area->nome;?></span>
 								<?php
 											echo '<br>';
+											$count++;
+											if ($count == 17 || $count == 34) { // Adiciona nova coluna
+												echo '</div></div><div class="col-4 vertical-line"><div class="form-group">';
+											}
 										}
 								?>
 								</div>
 							</div>
-								<div class="col-6 vertical-line">
-									<label>PROFESSORES</label>
-									<div class="form-group">
-									<?php
-											$res_prof = $conn->query($scriptProf);
-											$rowprof = $res_prof->num_rows;
+						</div>
+						<hr>
+						<center>
+							<label>PROFESSORES</label>
+						</center>
+						<br>
+						<div class="row">
+							<div class="col-4">
+								<div class="form-group">
+								<?php
+										$res_prof = $conn->query($scriptProf);
+										$rowprof = $res_prof->num_rows;
+										$count = 0;
 
-											while ($obj_prof=$res_prof->fetch_object()) {
-												if ($obj_prof->enable) {
-									?>
-												<input type="checkbox" name="checkprof[]" value="<?php echo $obj_prof->id_professor;?>" <?php
-												if($_SESSION['idSave']==$obj_prof->id_professor) echo "checked disabled"; ?>>
-												<label><?php echo $obj_prof->nome;?></label>
-									<?php
-												echo '<br>';	
-												}
+										while ($obj_prof=$res_prof->fetch_object()) {
+											if ($obj_prof->enable) {
+								?>
+											<input type="checkbox" name="checkprof[]" value="<?php echo $obj_prof->id_professor;?>" <?php
+											if($_SESSION['idSave']==$obj_prof->id_professor) echo "checked disabled"; ?>>
+											<span style="font-size: 16px; line-height: 2rem;"><?php echo $obj_prof->nome;?></span>
+								<?php
+											echo '<br>';
+											$count++;
+											if ($count == 5 || $count == 9) { // Adiciona nova coluna
+												echo '</div></div><div class="col-4 vertical-line"><div class="form-group">';
+											}											
 											}
-									?>
-									</div>
-							</div>
+										}
+								?>
+								</div>
+							</div>							
 						</div>
 						<hr>
 						<div class="row">

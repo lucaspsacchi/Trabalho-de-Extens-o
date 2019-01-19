@@ -28,6 +28,10 @@
 
 	<div class="container">
 
+		<!-- Breadcrumb -->
+		<label><a href="./home.php">Home</a> > Professores</label>
+		<hr><br>
+
 		<!-- Professores -->
 		<?php
 			while($vetor=$result->fetch_object()) {
@@ -43,7 +47,7 @@
 							<div class="card-block-prof">
 								<h4 class="card-text"><strong><?php echo $vetor->nome;?></strong></h4>
 								<p id="over" class="card-text p-prof p-truncated"><?php echo $vetor->descricao;?></p>
-								<form class="btn-prof" method="post" action="./busca.php">
+								<form class="btn-prof" method="get" action="./busca.php">
 									<input type="hidden" name="id_prof" value="<?php echo $vetor->id_professor;?>">
 									<button class="btn btn-secondary">Ver projetos</button>
 								</form>	

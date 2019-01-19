@@ -1,7 +1,7 @@
 <?php
   include('./connection/connection.php');
 
-	//Realiza uma busca no banco de dados para listar os professores
+	//Realiza uma busca no banco de dados para listar as áreas
 	// $scriptSQL = "SELECT id_area, nome, descricao, foto
 	// 				FROM area
 	// 				ORDER BY nome ASC";
@@ -30,7 +30,11 @@
 	?>
 
 	<div class="container">
-		
+
+		<!-- Breadcrumb -->
+		<label><a href="./home.php">Home</a> > Áreas</label>
+		<hr><br>
+
 		<?php
 			while($vetor=$result->fetch_object()) { // Exibe todas as áreas retornadas do bd
 		?>
@@ -46,8 +50,8 @@
 						<div class="col-xl-8 col-lg-7">
 							<div class="card-block-area">
 								<p class="card-desc p-area"><?php echo $vetor->descricao;?></p>
-								<form class="btn-area" method="post" action="./busca.php"> <!-- Redireciona para a página busca com o id da área escolhida -->
-									<input type="hidden" name="id_area" value="<?php echo $vetor->id_area;?>"> <!-- É passado o id da área por post -->
+								<form class="btn-area" method="GET" action="./areaano.php"> <!-- Redireciona para a página busca com o id da área escolhida -->
+									<input type="hidden" name="id_area" value="<?php echo $vetor->id_area;?>">
 									<button class="btn btn-secondary">Ver projetos</button>
 								</form>
 							</div>

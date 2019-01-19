@@ -39,6 +39,17 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 
 	if (isset($_POST['salvar_dados'])) {
 
+		// Erros
+		if (count($_POST['checkarea']) == 0) {
+				
+		}
+		else if (count($_POST['checkprof'])) {
+
+		}
+
+
+
+
 		if (isset($_FILES["file"]["type"])) {
 			$validextensions = array("jpeg", "jpg", "png");
 			$temporary = explode(".", $_FILES["file"]["name"]);
@@ -275,67 +286,83 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 							<textarea type="text" name="descricao" class="form-control" rows="3" required maxlength="1000" id="description" placeholder="Insira a descrição do projeto"><?php echo $vetor->descricao;?></textarea>
 						</div>
 						<hr>
-						
+						<center>
+							<label>ÁREAS<span class="ast">*</span></label>
+						</center>
 						<div class="row">
-							<div class="col-6">
-								<label>ÁREAS<span class="ast">*</span></label>
-							<div class="form-group">
-							<?php
-									//Encontra as areas de cada projeto
-									$scriptArea = "SELECT id_area, nome
-																FROM area
-																GROUP BY nome";
-							
-									$res_area = $conn->query($scriptArea);
-							
-									while ($obj_area=$res_area->fetch_object()) {
-							?>
-										<input type="checkbox" name="checkarea[]" value="<?php echo $obj_area->id_area;?>"
-										<?php
-											$script = "SELECT * FROM area NATURAL JOIN area_proj WHERE area_proj.id_area =".$obj_area->id_area." AND area_proj.id_projeto =".$id;
-											$sql = $conn->query($script);
-											if ($sql->fetch_object()) {
-												echo 'checked';
+							<div class="col-4">
+								<div class="form-group">
+								<?php
+										//Encontra as areas de cada projeto
+										$scriptArea = "SELECT id_area, nome
+																	FROM area
+																	GROUP BY nome";
+								
+										$res_area = $conn->query($scriptArea);
+										$count = 0;
+								
+										while ($obj_area=$res_area->fetch_object()) {
+								?>
+											<input type="checkbox" name="checkarea[]" value="<?php echo $obj_area->id_area;?>"
+											<?php
+												$script = "SELECT * FROM area NATURAL JOIN area_proj WHERE area_proj.id_area =".$obj_area->id_area." AND area_proj.id_projeto =".$id;
+												$sql = $conn->query($script);
+												if ($sql->fetch_object()) {
+													echo 'checked';
+												}
+											?>
+											>
+											<span style="font-size: 16px; line-height: 2rem;"><?php echo $obj_area->nome;?></span>
+								<?php
+											echo '<br>';
+											$count++;
+											if ($count == 17 || $count == 34) {
+												echo '</div></div><div class="col-4 vertical-line"><div class="form-group">';
 											}
-										?>
-										>
-										<label><?php echo $obj_area->nome;?></label>
-							<?php
-										echo '<br>';
-									}
-							?>
+										}
+								?>
+								</div>
 							</div>
-							</div>
-								<div class="col-6 vertical-line">
-									<label>PROFESSORES</label>
-									<div class="form-group">
-									<?php
-											//Encontra os professores de cada projeto
-											$scriptProf = "SELECT id_professor, nome, enable
-																		FROM professor
-																		ORDER BY nome ASC";
+						</div>
+						<hr>
+						<center>
+							<label>PROFESSORES</label>
+						</center>
+						<div class="row">
+							<div class="col-4">
+								<div class="form-group">
+								<?php
+										//Encontra os professores de cada projeto
+										$scriptProf = "SELECT id_professor, nome, enable
+																	FROM professor
+																	ORDER BY nome ASC";
 
-											$res_prof = $conn->query($scriptProf);
+										$res_prof = $conn->query($scriptProf);
+										$count = 0;
 
-											while ($obj_prof=$res_prof->fetch_object()) {
-												if ($obj_prof->enable) {
-									?>
-												<input type="checkbox" name="checkprof[]" value="<?php echo $obj_prof->id_professor;?>"
-												<?php
-													$script = "SELECT * FROM professor NATURAL JOIN proj_prof WHERE proj_prof.id_professor =".$obj_prof->id_professor." AND proj_prof.id_projeto =".$id;
-													$sql = $conn->query($script);
-													if ($sql->fetch_object()) {
-														echo 'checked';
-													}
-												if($_SESSION['idSave']==$obj_prof->id_professor) echo " disabled"; ?>
-												>
-												<label><?php echo $obj_prof->nome;?></label>
-									<?php
-												echo '<br>';
-												}	
+										while ($obj_prof=$res_prof->fetch_object()) {
+											if ($obj_prof->enable) {
+								?>
+											<input type="checkbox" name="checkprof[]" value="<?php echo $obj_prof->id_professor;?>"
+											<?php
+												$script = "SELECT * FROM professor NATURAL JOIN proj_prof WHERE proj_prof.id_professor =".$obj_prof->id_professor." AND proj_prof.id_projeto =".$id;
+												$sql = $conn->query($script);
+												if ($sql->fetch_object()) {
+													echo 'checked';
+												}
+											if($_SESSION['idSave']==$obj_prof->id_professor) echo " disabled"; ?>
+											>
+											<label><?php echo $obj_prof->nome;?></label>
+								<?php
+											echo '<br>';
+											$count++;
+											if ($count == 5 || $count == 9) { // Adiciona nova coluna
+												echo '</div></div><div class="col-4 vertical-line"><div class="form-group">';
 											}
-									?>
-									</div>
+											}	
+										}
+								?>
+								</div>
 							</div>
 						</div>
 						<hr>
@@ -482,26 +509,3 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 		</script>
 </html>
 
-<!-- 
-<script>
-$('#btn-submit').on('submit',function(e){
-    e.preventDefault();
-    var form = $(this).parents('form');
-    swal({
-        title: "Are you sure?",
-        text: "You will not be able to recover this imaginary file!",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Yes, delete it!",
-        closeOnConfirm: true
-    }, function(isConfirm){
-		if (isConfirm.value == true) {
-			return true;
-		}
-		else {
-			return false;
-		}
-    });
-});
-</script> -->

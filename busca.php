@@ -5,7 +5,7 @@
 	$act = 0;
 	$page = 0;
 	//Home
-	if ($_POST['todos_proj'] == 1) {
+	if ($_GET['todos_proj'] == 1) {
 		$scriptSQL = "SELECT id_projeto, nome, descricao, foto, enable
 						FROM projeto
 						WHERE enable = 1
@@ -15,10 +15,10 @@
 		$page = 1;
 	}
 	//Professor
-	else if ($_POST['id_prof'] != NULL) {
+	else if ($_GET['id_prof'] != NULL) {
 		$scriptSQL = "SELECT id_projeto, nome, descricao, foto, enable
 						FROM projeto NATURAL JOIN proj_prof
-						WHERE proj_prof.id_professor =".$_POST['id_prof']."
+						WHERE proj_prof.id_professor =".$_GET['id_prof']."
 						ORDER BY id_projeto DESC";
 
 		$result = $conn->query($scriptSQL);
@@ -26,35 +26,41 @@
 		// Busca pelas informações do professor
 		$scriptSQL = "SELECT nome, descricao, foto, site, sexo
 						FROM professor
-						WHERE id_professor =".$_POST['id_prof']."";
+						WHERE id_professor =".$_GET['id_prof']."";
 
 		$rprof = $conn->query($scriptSQL);
 		$prof=$rprof->fetch_object();
 		$page = 2;
 	}
 	//Área
-	else if ($_POST['id_area'] != NULL) {
+	else if ($_GET['id_area'] != NULL) {
+		// Busca pelo nome da área
+		$script = "SELECT nome FROM area WHERE id_area = ".$_GET['id_area'];
+
+		$nome = $conn->query($script);
+		$var = $nome->fetch_object();
+
 		$scriptSQL = "SELECT id_projeto, nome, descricao, foto, enable
 						FROM projeto NATURAL JOIN area_proj
-						WHERE area_proj.id_area =".$_POST['id_area']."
+						WHERE area_proj.id_area =".$_GET['id_area']." AND projeto.data_inicio = ".$_GET['ano']." AND projeto.sem_ini = ".$_GET['sem']."
 						ORDER BY id_projeto DESC";
 
 		$result = $conn->query($scriptSQL);
 		$page = 3;
 	}
 	//Ano
-	else if ($_POST['ano'] != NULL) {
+	else if ($_GET['ano'] != NULL) {
 		$scriptSQL = "SELECT id_projeto, nome, descricao, foto, enable
 						FROM projeto
-						WHERE data_inicio =".$_POST['ano']."
+						WHERE data_inicio =".$_GET['ano']."
 						ORDER BY id_projeto DESC";
 
 		$result = $conn->query($scriptSQL);
 		$page = 4;
 	}
 	//Busca
-	else if ($_POST['search'] != NULL) {
-		$string = "'%".$_POST['search']."%'";
+	else if ($_GET['search'] != NULL) {
+		$string = "'%".$_GET['search']."%'";
 
 		$scriptSQL = "SELECT projeto.id_projeto, projeto.nome, projeto.descricao, projeto.foto, projeto.enable
 						FROM area, area_proj, projeto, proj_prof, professor
@@ -99,9 +105,43 @@
 
 	<div class="container">
 
+		<!-- Breadcrumb -->
+		<?php
+		if ($page == 1) { // Home
+			?>
+			<label><a href="./home.php">Home</a> > Projetos</label>
+			<hr><br>
+			<?php
+		}
+		else if ($page == 2) { // Professor
+			?>
+			<label><a href="./home.php">Home</a> > <a href="./professor.php">Professores</a> > Projetos</label>
+			<hr><br>
+			<?php
+		}
+		else if ($page == 3) { // Área
+			?>
+			<label><a href="./home.php">Home</a> > <a href="./areaano.php?id_area=<?php echo $_GET['id_area']; ?>"><?php echo $var->nome; ?></a> > <?php echo $_GET['ano'] . '/' . ($_GET['sem'] + 1); ?></label>
+			<hr><br>
+			<?php
+		}
+		else if ($page == 4) { // Ano
+			?>
+			<label><a href="./home.php">Home</a> > <a href="./ano.php"><?php echo $_GET['ano']; ?></a> > Projetos</label>
+			<hr><br>
+			<?php
+		}
+		else { // Busca
+			?>
+			<label><a href="./home.php">Home</a> > Projetos</label>
+			<hr><br>
+			<?php
+		}
+		?>
+
 		<!-- Exibe as informações do professor se a busca vier da tela de professores -->
 		<?php 
-		if ($_POST['id_prof'] != NULL) {?>
+		if ($_GET['id_prof'] != NULL) {?>
 		<div class="card-custom">
 			<div class="col-12 col-md-12">
 				<center>
@@ -172,9 +212,9 @@
 							<div class="card-block-home">
 								<h4 class="card-text h4-home"><strong><?php echo $vetor->nome;?></strong></h4>
 								<p class="card-text p-home p-truncated"><?php echo $vetor->descricao;?></p>
-								<form method="POST" action="./projeto.php">
-									<input type="hidden" name="id_proj" value="<?php echo $vetor->id_projeto;?>"> <!-- Id do proheto é passado pelo método post -->
-									<input type="submit" class="btn btn-secondary btn-home" name="botao" value="Saiba mais">
+								<form method="GET" action="./projeto.php">
+									<input type="hidden" name="id_proj" value="<?php echo $vetor->id_projeto;?>">
+									<button type="submit" class="btn btn-secondary btn-home">Saiba mais</button>
 								</form>
 							</div>
 						</div>
