@@ -201,7 +201,7 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 						</div>
 						<div class="col-2 vertical-line">
 							<div class="form-group">
-								<label>SEXO<span class="ast">*</span></label><br>
+								<label>GÊNERO<span class="ast">*</span></label><br>
 								<input type="radio" id="masc" name="sexo" value="0" <?php if ($vetor->sexo == '0') echo 'checked'; ?>>
 								<label> Masculino</label><br>
 								<input type="radio" id="femi" name="sexo" value="1" <?php if ($vetor->sexo == '1') echo 'checked'; ?>>

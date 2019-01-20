@@ -17,7 +17,7 @@ if (isset($_SESSION['error'])) {
 if (isset($_POST['salvar_dados'])) {
 
     if (!isset($_POST['sexo'])) {
-        $_SESSION['error'] = "Campo 'Sexo' deve ser preenchido";
+        $_SESSION['error'] = "Campo 'Gênero' deve ser preenchido";
         header('Location: ./cadastro_projeto.php');
     }
 
@@ -94,7 +94,7 @@ if (isset($_POST['salvar_dados'])) {
                                 </div>
                                 <div class="col-3 col-md-3 vertical-line">
                                     <div class="form-group">
-                                        <label>SEXO<span class="ast">*</span></label><br>
+                                        <label>GÊNERO<span class="ast">*</span></label><br>
                                         <input type="radio" id="masc" name="sexo" value="0" checked>
                                         <label> Masculino</label><br>
                                         <input type="radio" id="femi" name="sexo" value="1">
