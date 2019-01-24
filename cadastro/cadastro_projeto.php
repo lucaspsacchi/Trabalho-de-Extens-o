@@ -54,7 +54,6 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 				$validextensions = array("jpeg", "jpg", "png");
 				$temporary = explode(".", $_FILES["file"]["name"]);
 				$file_extension = end($temporary);
-
 				if (in_array($file_extension, $validextensions)) {//Verifica se está de acordo com a extensão
 					if ($_FILES["file"]["error"] > 0) {
 
@@ -74,8 +73,10 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 							//}
 					}
 				}
+				if ($_FILES["file"]["name"] == NULL) { // Insere a imagem padrão se não foi escolhida nenhuma imagem
+					$novoNome = 'logo_bordas.png';
+				}
 			}
-
 
 			//Inserção dos dados do projeto no banco de dados
 			if ($var_site == NULL && $var_alunos == NULL) {
@@ -286,8 +287,8 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 								<center>
 									<div class="form-group">
 										<label for="comment">FOTO DO PROJETO<span class="ast">*</span> </label><br>
-										<img id="photo" src="../Imagens/imgindisponivel.jpg" class="img-rounded" width="330" height="210" style="margin-bottom: 10px;">
-										<input type="file" name="file" id="file" required/>
+										<img id="photo" src="../Imagens/imgindisponivel.jpg" class="img-rounded" width="360" height="210" style="margin-bottom: 10px;">
+										<input type="file" name="file" id="file"/>
 									</div>
 								</center>
 							</div>

@@ -412,7 +412,7 @@ if (!isset($_SESSION['logado']) && !isset($_SESSION['idSave'])) {
 								<center>
 									<div class="form-group">
 										<label for="comment">FOTO DO PROJETO<span class="ast">*</span> </label><br>								
-										<img id="photo" src="../Imagens/<?php echo $vetor->foto;?>" class="img-rounded" width="280" height="210" style="margin-bottom: 10px;">
+										<img id="photo" src="../Imagens/<?php echo $vetor->foto;?>" class="img-rounded" width="360" height="210" style="margin-bottom: 10px;">
 										<input type="file" name="file" id="file">
 										<div class="form-group">
 											<input type="hidden" id="photo_change" name="photo_change">
