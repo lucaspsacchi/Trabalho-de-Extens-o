@@ -101,13 +101,13 @@ if (isset($_POST['inputUser'])) {
                                     </div>
                                     <!-- Group para senha -->
                                     <div class="form-group">
-                                        <div class="row d-flex justify-content-between"> <!-- Between está posicionando senha e esqueceu nas extremidades -->
+                                        <div class="row d-flex justify-content-start"> <!-- Between está posicionando senha e esqueceu nas extremidades -->
                                             <div class="">
                                                 <label for="loginPassword" class="">Senha</label>
                                             </div>
-                                            <div class="">
-                                                <label for="esqueceu" class=""><a href="./esqueceu.php">Esqueceu sua senha?</a></label>
-                                            </div>
+                                            <!-- <div class="">
+                                                <label for="esqueceu" class=""><a href="">Esqueceu sua senha?</a></label>
+                                            </div> -->
                                         </div>
                                         <div class="row d-flex">
                                             <div class="custom-input">
